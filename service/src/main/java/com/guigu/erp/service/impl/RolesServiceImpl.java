@@ -5,16 +5,27 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
+import com.guigu.erp.mapper.RoleMenuMapper;
 import com.guigu.erp.mapper.RolesMapper;
+import com.guigu.erp.mapper.UserRoleMapper;
+import com.guigu.erp.pojo.RoleMenu;
 import com.guigu.erp.pojo.Roles;
+import com.guigu.erp.pojo.UserRole;
 import com.guigu.erp.service.RolesService;
 import com.guigu.erp.util.ResultUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RolesServiceImpl extends ServiceImpl<RolesMapper, Roles> implements RolesService {
+    @Autowired
+    private RolesMapper rolesMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
     //条件分页查询
     @Override
     public PageInfo<Roles> queryPage(int pageNo, int pageSize, Roles roles) {
@@ -83,11 +94,55 @@ public class RolesServiceImpl extends ServiceImpl<RolesMapper, Roles> implements
     }
     //删除（修改setStatus(1)）
     @Override
-    public boolean deleteById(int id) {
+    public ResultUtil deleteById(int id) {
+        ResultUtil<Object> resultUtil = new ResultUtil<>();
+        QueryWrapper<UserRole> userRoleQueryWrapper = new QueryWrapper<>();
+        userRoleQueryWrapper.eq("role_id",id);
+        List<UserRole> roleList = userRoleMapper.selectList(userRoleQueryWrapper);
+        if (roleList.size()>0){
+            resultUtil.setResult(false);
+            resultUtil.setMessage("已有用户正在使用角色,删除失败");
+            return resultUtil;
+        }
+        QueryWrapper<RoleMenu> roleMenuQueryWrapper = new QueryWrapper<>();
+        roleMenuQueryWrapper.eq("role_id",id);
+        List<RoleMenu> roleMenus = roleMenuMapper.selectList(roleMenuQueryWrapper);
+        if (roleMenus.size()>0){
+            resultUtil.setResult(false);
+            resultUtil.setMessage("已有菜单正在使用角色,删除失败");
+            return resultUtil;
+        }
         QueryWrapper<Roles> usersQueryWrapper = new QueryWrapper<>();
         usersQueryWrapper.eq("id",id);
         Roles roles = this.getOne(usersQueryWrapper);
         roles.setStatus(1);
-        return this.updateById(roles);
+        boolean result = this.updateById(roles);
+        if (result){
+            resultUtil.setResult(true);
+            resultUtil.setMessage("删除成功");
+            return resultUtil;
+        }
+        return resultUtil;
+    }
+
+    @Override
+    public List<Roles> selectRoleByUid(int uid) {
+        return rolesMapper.selectRoleByUid(uid);
+    }
+
+    @Override
+    public List<Roles> selectAll(int uid, int userId) {
+        //当前点击的
+        List<Roles> roles = rolesMapper.selectRoleByUid(userId);
+        //所有的
+        List<Roles> list = this.list();
+        for (Roles role:list){
+            for (Roles checkRole:roles){
+                if (role.getId()==checkRole.getId()){
+                    role.setChecked(true);
+                }
+            }
+        }
+        return list;
     }
 }

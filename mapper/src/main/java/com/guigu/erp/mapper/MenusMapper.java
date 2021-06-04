@@ -30,4 +30,7 @@ public interface MenusMapper extends BaseMapper<Menus> {
     @Select("select m.id,m.`parent_id`,m.`name`,m.`image_url`,m.`link_url` from `sys_menus` m left join `sys_menu_role` mr \n" +
             "on m.`id` = mr.`menu_id`  where mr.`role_id` =#{rid} and m.`seq`=3")
     List<Menus> selectMenuByRid(int rid);
+
+    @Select("select m.`id`,m.`name` from `sys_menus` m where m.`seq` =#{seq}")
+    List<Menus> selectByMenuByParentId(int seq);
 }

@@ -14,5 +14,5 @@ public interface UsersService extends IService<Users> {
 
     ResultUtil insert(Users userInfo);
 
-    boolean deleteById(int id);
+    ResultUtil deleteById(int id);
 }

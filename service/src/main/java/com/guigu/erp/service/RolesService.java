@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import com.guigu.erp.pojo.Roles;
 import com.guigu.erp.util.ResultUtil;
 
+import java.util.List;
+
 
 public interface RolesService extends IService<Roles> {
     PageInfo<Roles> queryPage(int pageNo, int pageSize, Roles roles);
@@ -13,5 +15,9 @@ public interface RolesService extends IService<Roles> {
 
     ResultUtil insert(Roles userInfo);
 
-    boolean deleteById(int id);
+    ResultUtil deleteById(int id);
+
+    List<Roles> selectRoleByUid(int uid);
+
+    List<Roles> selectAll(int uid, int userId);
 }

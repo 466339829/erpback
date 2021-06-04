@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/roles")
 public class RolesController {
@@ -64,7 +66,7 @@ public class RolesController {
      * @return
      */
     @RequestMapping("/delete/{id}")
-    public boolean delete(@PathVariable int id){
+    public ResultUtil delete(@PathVariable int id){
         return  rolesService.deleteById(id);
     }
     /**
@@ -77,7 +79,7 @@ public class RolesController {
         return  rolesService.getById(id);
     }
     /**
-     * 新增
+     * 修改
      *
      * @param roles
      * @return
@@ -85,5 +87,11 @@ public class RolesController {
     @RequestMapping(value = "/update", produces = "application/json;charset=utf-8")
     public boolean update(Roles roles) {
         return rolesService.updateById(roles);
+    }
+
+    //查询所有角色
+    @RequestMapping(value = "/selectAllRole/{uid}/{userId}", produces = "application/json;charset=utf-8")
+    public List<Roles> selectAllRole(@PathVariable int uid,@PathVariable int userId){
+        return rolesService.selectAll(uid,userId);
     }
 }

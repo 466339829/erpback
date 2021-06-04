@@ -17,4 +17,6 @@ public class Roles {
     private String descn;
     private Integer status;
 
+    @TableField(exist = false)
+    private boolean checked;
 }

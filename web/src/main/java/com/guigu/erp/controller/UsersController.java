@@ -63,7 +63,7 @@ public class UsersController {
      * @return
      */
     @RequestMapping("/delete/{id}")
-    public boolean delete(@PathVariable int id){
+    public ResultUtil delete(@PathVariable int id){
         return  usersService.deleteById(id);
     }
 

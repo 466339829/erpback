@@ -22,6 +22,8 @@ public class Menus {
     @TableField("link_url")
     private String linkUrl;
     private Integer status;
+    @TableField(value = "parentName",exist = false)
+    private String parentName;
     @TableField(exist = false)
     List<Menus> childMenu;
     @TableField(exist = false)
