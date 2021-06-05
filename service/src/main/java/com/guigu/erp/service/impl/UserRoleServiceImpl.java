@@ -34,10 +34,11 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
             resultUtil.setResult(true);
             resultUtil.setMessage("授权成功");
             return resultUtil;
+        }else {
+            resultUtil.setResult(false);
+            resultUtil.setMessage("授权失败");
+            return resultUtil;
         }
-        resultUtil.setResult(false);
-        resultUtil.setMessage("授权失败");
-        return resultUtil;
     }
 
     @Override
@@ -50,9 +51,10 @@ public class UserRoleServiceImpl extends ServiceImpl<UserRoleMapper, UserRole> i
             resultUtil.setResult(true);
             resultUtil.setMessage("删除成功");
             return resultUtil;
+        }else {
+            resultUtil.setResult(false);
+            resultUtil.setMessage("删除失败");
+            return resultUtil;
         }
-        resultUtil.setResult(false);
-        resultUtil.setMessage("删除失败");
-        return resultUtil;
     }
 }

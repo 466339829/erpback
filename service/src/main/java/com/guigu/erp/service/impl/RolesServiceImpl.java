@@ -55,10 +55,11 @@ public class RolesServiceImpl extends ServiceImpl<RolesMapper, Roles> implements
             resultUtil.setMessage("角色名已存在");
             resultUtil.setResult(false);
             return resultUtil;
+        }else {
+            resultUtil.setMessage("角色名可以使用");
+            resultUtil.setResult(true);
+            return resultUtil;
         }
-        resultUtil.setMessage("角色名可以使用");
-        resultUtil.setResult(true);
-        return resultUtil;
     }
     //新增
     @Override
@@ -121,8 +122,10 @@ public class RolesServiceImpl extends ServiceImpl<RolesMapper, Roles> implements
             resultUtil.setResult(true);
             resultUtil.setMessage("删除成功");
             return resultUtil;
-        }
-        return resultUtil;
+        }else
+            resultUtil.setResult(true);
+            resultUtil.setMessage("删除失败");
+            return resultUtil;
     }
 
     @Override

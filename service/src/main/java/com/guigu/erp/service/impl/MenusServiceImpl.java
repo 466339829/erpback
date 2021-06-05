@@ -210,8 +210,11 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, Menus> implements
             resultUtil.setMessage("删除成功");
             resultUtil.setResult(true);
             return resultUtil;
+        }else {
+            resultUtil.setMessage("删除失败");
+            resultUtil.setResult(false);
+            return resultUtil;
         }
-        return resultUtil;
     }
 
 }
