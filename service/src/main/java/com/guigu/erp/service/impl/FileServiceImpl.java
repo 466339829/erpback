@@ -27,14 +27,6 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         //100+1类编号+2类编号+3类编号+6位流水号
         String longId = fileMapper.getLongId();
         file.setProductId(IDUtil.getProductId(longId, file));
-        file.setChangeTag("0");
-        file.setCheckTag("0");
-        file.setPriceChangeTag("0");
-        file.setFileChangeAmount(0);
-        file.setDeleteTag("0");
-        file.setDesignModuleTag("0");
-        file.setDesignProcedureTag("0");
-        file.setDesignCellTag("0");
 
         QueryWrapper<ConfigFileKind> configFileKindQueryWrapper1 = new QueryWrapper<>();
         configFileKindQueryWrapper1.eq("kind_id", file.getFirstKindId());
@@ -56,19 +48,26 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
 
     //复核通过
     @Override
-    public boolean checkTag(int id) {
+    public boolean checkTag(int id,String checker) {
         File file = this.getById(id);
         file.setCheckTag("1");
-        file.setChangeTag("0");
+        //复核人
+        file.setChecker(checker);
+        //复核时间
+        file.setCheckTime(new Date());
         return this.updateById(file);
     }
 
     @Override
     public boolean updateFile(File file) {
+        //未复核
         file.setCheckTag("0");
+        //档案变更标志
+        file.setChangeTag("1");
+        //变更时间
         file.setChangeTime(new Date());
+        //产品档案每变更一次,则file_change_amount加1
         file.setFileChangeAmount(file.getFileChangeAmount() + 1);
-
         return this.updateById(file);
     }
 
@@ -126,5 +125,23 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             resultUtil.setResult(false);
             resultUtil.setMessage("恢复失败");
             return resultUtil;
+    }
+
+    @Override
+    public ResultUtil checkName(String name) {
+        ResultUtil<File> resultUtil = new ResultUtil<>();
+        //判断产品名是否存在
+        QueryWrapper<File> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("product_name", name);
+        File file = this.getOne(queryWrapper);
+        if (file != null && !"2".equals(file.getDeleteTag())) {
+            resultUtil.setMessage("用户名已存在");
+            resultUtil.setResult(false);
+            return resultUtil;
+        } else {
+            resultUtil.setMessage("用户名可以使用");
+            resultUtil.setResult(true);
+            return resultUtil;
+        }
     }
 }

@@ -30,6 +30,15 @@ public class FileController {
     public boolean insert(File file) {
         return fileService.insert(file);
     }
+    /**
+     * 查询产品名是否存在可用
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "/checkName", produces = "application/json;charset=utf-8")
+    public ResultUtil checkName(String name) {
+        return fileService.checkName(name);
+    }
 
     /**
      * 复核条件分页查询角色
@@ -53,6 +62,10 @@ public class FileController {
         if (!StringUtil.isEmpty(file.getCheckTag())){
             queryWrapper.like("check_tag",file.getCheckTag());
         }
+        //type
+        if (!StringUtil.isEmpty(file.getType())){
+            queryWrapper.like("type",file.getType());
+        }
         return  fileService.page(new Page<File>(pageNo,pageSize),queryWrapper);
     }
     /**
@@ -70,9 +83,9 @@ public class FileController {
      * @param id
      * @return
      */
-    @RequestMapping("/checkTag/{id}")
-    public boolean checkTag(@PathVariable int id){
-        return  fileService.checkTag(id);
+    @RequestMapping("/checkTag")
+    public boolean checkTag( int id,String checker){
+        return  fileService.checkTag(id,checker);
     }
 
     /**

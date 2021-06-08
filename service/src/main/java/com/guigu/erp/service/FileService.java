@@ -7,7 +7,7 @@ import com.guigu.erp.util.ResultUtil;
 public interface FileService extends IService<File> {
     boolean insert(File file);
 
-    boolean checkTag(int id);
+    boolean checkTag(int id,String checker);
 
     boolean updateFile(File file);
 
@@ -16,4 +16,6 @@ public interface FileService extends IService<File> {
     ResultUtil foreverDelete(int id);
 
     ResultUtil recoveryById(int id);
+
+    ResultUtil checkName(String name);
 }
