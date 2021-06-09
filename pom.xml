@@ -213,7 +213,7 @@
                 <version>2.1</version>
                 <configuration>
                     <path>/</path>
-                    <port>8080</port>
+                    <port>8888</port>
                 </configuration>
             </plugin>
         </plugins>

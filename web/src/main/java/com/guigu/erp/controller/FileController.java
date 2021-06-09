@@ -30,8 +30,10 @@ public class FileController {
     public boolean insert(File file) {
         return fileService.insert(file);
     }
+
     /**
      * 查询产品名是否存在可用
+     *
      * @param name
      * @return
      */
@@ -42,50 +44,54 @@ public class FileController {
 
     /**
      * 复核条件分页查询角色
+     *
      * @param pageNo
      * @param pageSize
      * @return
      */
 
     @RequestMapping("/page")
-    public IPage<File> page(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
-                            @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
-                            File file){
+    public IPage<File> page(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                            File file) {
         //组装查询条件
-        QueryWrapper<File> queryWrapper =new QueryWrapper<File>();
-        if(!StringUtils.isEmpty(file.getDeleteTag())){
-            queryWrapper.like("delete_tag",file.getDeleteTag());
+        QueryWrapper<File> queryWrapper = new QueryWrapper<File>();
+        if (!StringUtils.isEmpty(file.getDeleteTag())) {
+            queryWrapper.like("delete_tag", file.getDeleteTag());
         }
-        if(!StringUtils.isEmpty(file.getProductName())){
-            queryWrapper.like("product_name",file.getProductName());
+        if (!StringUtils.isEmpty(file.getProductName())) {
+            queryWrapper.like("product_name", file.getProductName());
         }
-        if (!StringUtil.isEmpty(file.getCheckTag())){
-            queryWrapper.like("check_tag",file.getCheckTag());
+        if (!StringUtil.isEmpty(file.getCheckTag())) {
+            queryWrapper.like("check_tag", file.getCheckTag());
         }
         //type
-        if (!StringUtil.isEmpty(file.getType())){
-            queryWrapper.like("type",file.getType());
+        if (!StringUtil.isEmpty(file.getType())) {
+            queryWrapper.like("type", file.getType());
         }
-        return  fileService.page(new Page<File>(pageNo,pageSize),queryWrapper);
+        return fileService.page(new Page<File>(pageNo, pageSize), queryWrapper);
     }
+
     /**
      * 单个查询
+     *
      * @param id
      * @return
      */
     @RequestMapping("/selectById/{id}")
-    public File selectById(@PathVariable int id){
-        return  fileService.getById(id);
+    public File selectById(@PathVariable int id) {
+        return fileService.getById(id);
     }
 
     /**
      * 复核通过
+     *
      * @param id
      * @return
      */
     @RequestMapping("/checkTag")
-    public boolean checkTag( int id,String checker){
-        return  fileService.checkTag(id,checker);
+    public boolean checkTag(int id, String checker) {
+        return fileService.checkTag(id, checker);
     }
 
     /**
@@ -101,32 +107,57 @@ public class FileController {
 
     /**
      * 删除
+     *
      * @param id
      * @return
      */
     @RequestMapping("/delete/{id}")
-    public ResultUtil delete(@PathVariable int id){
-        return  fileService.deleteById(id);
+    public ResultUtil delete(@PathVariable int id) {
+        return fileService.deleteById(id);
     }
 
 
     /**
      * //恢复档案
+     *
      * @param id
      * @return
      */
     @RequestMapping("/recovery/{id}")
-    public ResultUtil recovery(@PathVariable int id){
-        return  fileService.recoveryById(id);
+    public ResultUtil recovery(@PathVariable int id) {
+        return fileService.recoveryById(id);
     }
+
     /**
      * 删除
+     *
      * @param id
      * @return
      */
     @RequestMapping("/remove/{id}")
-    public ResultUtil remove(@PathVariable int id){
-        return  fileService.foreverDelete(id);
+    public ResultUtil remove(@PathVariable int id) {
+        return fileService.foreverDelete(id);
     }
 
+    @RequestMapping("/Filespage")
+    public IPage<File> Filespage(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                                 @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                 File file) {
+        //组装查询条件
+        QueryWrapper<File> queryWrapper = new QueryWrapper<File>();
+        if (!StringUtil.isEmpty(file.getProductName())) {
+            queryWrapper.like("product_name", file.getProductName());
+        }
+        if (!StringUtil.isEmpty(file.getFirstKindName())) {
+            queryWrapper.like("first_kind_name", file.getFirstKindName());
+        }
+        if (!StringUtil.isEmpty(file.getSecondKindName())) {
+            queryWrapper.like("second_kind_name", file.getSecondKindName());
+        }
+        if (!StringUtil.isEmpty(file.getThirdKindName())) {
+            queryWrapper.like("third_kind_name", file.getThirdKindName());
+        }
+
+        return fileService.page(new Page<File>(pageNo, pageSize), queryWrapper);
+    }
 }
