@@ -1,9 +1,21 @@
 package com.guigu.erp.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+@Data
+@TableName("m_design_procedure_details")
 public class DesignProcedureDetails {
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private Integer parentId;
@@ -28,129 +40,14 @@ public class DesignProcedureDetails {
 
     private String register;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date registerTime;
 
     private String designModuleTag;
 
     private String designModuleChangeTag;
+    @TableField(exist = false)
+    List<ModuleDetails> moduleDetails;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getDetailsNumber() {
-        return detailsNumber;
-    }
-
-    public void setDetailsNumber(Integer detailsNumber) {
-        this.detailsNumber = detailsNumber;
-    }
-
-    public String getProcedureId() {
-        return procedureId;
-    }
-
-    public void setProcedureId(String procedureId) {
-        this.procedureId = procedureId == null ? null : procedureId.trim();
-    }
-
-    public String getProcedureName() {
-        return procedureName;
-    }
-
-    public void setProcedureName(String procedureName) {
-        this.procedureName = procedureName == null ? null : procedureName.trim();
-    }
-
-    public BigDecimal getLabourHourAmount() {
-        return labourHourAmount;
-    }
-
-    public void setLabourHourAmount(BigDecimal labourHourAmount) {
-        this.labourHourAmount = labourHourAmount;
-    }
-
-    public String getProcedureDescribe() {
-        return procedureDescribe;
-    }
-
-    public void setProcedureDescribe(String procedureDescribe) {
-        this.procedureDescribe = procedureDescribe == null ? null : procedureDescribe.trim();
-    }
-
-    public String getAmountUnit() {
-        return amountUnit;
-    }
-
-    public void setAmountUnit(String amountUnit) {
-        this.amountUnit = amountUnit == null ? null : amountUnit.trim();
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getModuleSubtotal() {
-        return moduleSubtotal;
-    }
-
-    public void setModuleSubtotal(BigDecimal moduleSubtotal) {
-        this.moduleSubtotal = moduleSubtotal;
-    }
-
-    public String getRegister() {
-        return register;
-    }
-
-    public void setRegister(String register) {
-        this.register = register == null ? null : register.trim();
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public String getDesignModuleTag() {
-        return designModuleTag;
-    }
-
-    public void setDesignModuleTag(String designModuleTag) {
-        this.designModuleTag = designModuleTag == null ? null : designModuleTag.trim();
-    }
-
-    public String getDesignModuleChangeTag() {
-        return designModuleChangeTag;
-    }
-
-    public void setDesignModuleChangeTag(String designModuleChangeTag) {
-        this.designModuleChangeTag = designModuleChangeTag == null ? null : designModuleChangeTag.trim();
-    }
 }

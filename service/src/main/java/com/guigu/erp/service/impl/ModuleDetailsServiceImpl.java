@@ -18,6 +18,8 @@ import java.util.List;
 public class ModuleDetailsServiceImpl extends ServiceImpl<ModuleDetailsMapper, ModuleDetails> implements ModuleDetailsService {
     @Autowired
     private ModuleService moduleService;
+    @Autowired
+    private ModuleDetailsMapper moduleDetailsMapper;
     @Override
     public ResultUtil deleteById(int id, int parentId) {
         boolean result1 = this.removeById(id);
@@ -43,5 +45,10 @@ public class ModuleDetailsServiceImpl extends ServiceImpl<ModuleDetailsMapper, M
             resultUtil.setMessage("操作失败");
             return resultUtil;
         }
+    }
+
+    @Override
+    public List<ModuleDetails> selectByProductId(String productId) {
+        return moduleDetailsMapper.selectByProductId(productId);
     }
 }
