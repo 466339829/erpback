@@ -1,9 +1,17 @@
 package com.guigu.erp.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@TableName("s_cell")
 public class Cell {
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private String storeId;
@@ -35,14 +43,33 @@ public class Cell {
     private String config;
 
     private String register;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date registerTime;
 
     private String checker;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date checkTime;
-
     private String checkTag;
+    private String designer;
+    private String amountUnit;
+
+    public String getAmountUnit() {
+        return amountUnit;
+    }
+
+    public void setAmountUnit(String amountUnit) {
+        this.amountUnit = amountUnit;
+    }
+
+    public String getDesigner() {
+        return designer;
+    }
+
+    public void setDesigner(String designer) {
+        this.designer = designer;
+    }
 
     public Integer getId() {
         return id;

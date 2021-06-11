@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.pagehelper.util.StringUtil;
 import com.guigu.erp.pojo.File;
+import com.guigu.erp.service.CellService;
 import com.guigu.erp.service.FileService;
 import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FileController {
     @Autowired
     private FileService fileService;
+
 
     /**
      * 新增
@@ -143,8 +145,10 @@ public class FileController {
     public IPage<File> Filespage(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                  File file) {
+
         //组装查询条件
         QueryWrapper<File> queryWrapper = new QueryWrapper<File>();
+        queryWrapper.eq("design_procedure_tag", 0);
         if (!StringUtil.isEmpty(file.getProductName())) {
             queryWrapper.like("product_name", file.getProductName());
         }
@@ -160,4 +164,12 @@ public class FileController {
 
         return fileService.page(new Page<File>(pageNo, pageSize), queryWrapper);
     }
+
+    @RequestMapping("/fisByid")
+    public File fisbyid(int id) {
+
+        return fileService.getById(id);
+
+    }
+
 }
