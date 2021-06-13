@@ -2,6 +2,8 @@ package com.guigu.erp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.guigu.erp.mapper.ConfigFileKindMapper;
 import com.guigu.erp.mapper.FileMapper;
 import com.guigu.erp.pojo.ConfigFileKind;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -64,8 +67,8 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         file.setCheckTag("0");
         //档案变更标志
         file.setChangeTag("1");
-        //变更时间
-        file.setChangeTime(new Date());
+        /*//变更时间
+        file.setChangeTime(new Date());*/
         //产品档案每变更一次,则file_change_amount加1
         file.setFileChangeAmount(file.getFileChangeAmount() + 1);
         return this.updateById(file);
@@ -143,5 +146,49 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             resultUtil.setResult(true);
             return resultUtil;
         }
+    }
+
+    @Override
+    public PageInfo queryPage(int pageNo, int pageSize, File file) {
+        List<File> fileList = null;
+        if (file != null) {
+            //追加条件 产品名称
+            QueryWrapper<File> queryWrapper = new QueryWrapper<>();
+            if (file.getProductName() != null && file.getProductName() != "")
+                queryWrapper.like("product_name", file.getProductName());
+           // 追加条件 产品i级分类编号
+            if (file.getFirstKindId() != null && file.getFirstKindId() != "")
+                queryWrapper.eq("first_kind_id", file.getFirstKindId());
+            // 追加条件 产品ii级分类编号
+            if (file.getSecondKindId() != null && file.getSecondKindId() != "")
+                queryWrapper.eq("second_kind_id", file.getSecondKindId());
+            // 追加条件 产品iii级分类编号
+            if (file.getThirdKindId() != null && file.getThirdKindId() != "")
+                queryWrapper.eq("third_kind_id", file.getThirdKindId());
+            // 追加条件 建档时间开始
+            if (file.getRegisterTime() != null)
+                queryWrapper.ge("register_time", file.getRegisterTime());
+            // 追加条件 建档时间结束
+            if (file.getRegisterTime2() != null )
+                queryWrapper.le("register_time", file.getRegisterTime2());
+            //审核标志0: 等待1: 通过2: 不通过
+            if (file.getCheckTag() != null && file.getCheckTag() != "")
+                queryWrapper.eq("check_tag", file.getCheckTag());
+             //产品删除标志0: 未删除1: 已删除2永久删除
+            if (file.getDeleteTag() != null && file.getDeleteTag() != "")
+                queryWrapper.eq("delete_tag", file.getDeleteTag());
+            //类型
+            if (file.getType() != null && file.getType() != "")
+                queryWrapper.eq("type", file.getType());
+            //design_module_tag物料组成标志0
+            if (file.getDesignModuleTag() != null && file.getDesignModuleTag() != "")
+                queryWrapper.eq("design_module_tag", file.getDesignModuleTag());
+            PageHelper.startPage(pageNo, pageSize);
+            fileList = this.list(queryWrapper);
+        } else {
+            PageHelper.startPage(pageNo, pageSize);
+            fileList = this.list();
+        }
+        return new PageInfo<File>(fileList);
     }
 }

@@ -3,13 +3,12 @@ package com.guigu.erp.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.guigu.erp.pojo.File;
-import com.guigu.erp.service.CellService;
 import com.guigu.erp.service.FileService;
 import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,25 +52,10 @@ public class FileController {
      */
 
     @RequestMapping("/page")
-    public IPage<File> page(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                            File file) {
-        //组装查询条件
-        QueryWrapper<File> queryWrapper = new QueryWrapper<File>();
-        if (!StringUtils.isEmpty(file.getDeleteTag())) {
-            queryWrapper.like("delete_tag", file.getDeleteTag());
-        }
-        if (!StringUtils.isEmpty(file.getProductName())) {
-            queryWrapper.like("product_name", file.getProductName());
-        }
-        if (!StringUtil.isEmpty(file.getCheckTag())) {
-            queryWrapper.like("check_tag", file.getCheckTag());
-        }
-        //type
-        if (!StringUtil.isEmpty(file.getType())) {
-            queryWrapper.like("type", file.getType());
-        }
-        return fileService.page(new Page<File>(pageNo, pageSize), queryWrapper);
+    public PageInfo<File> page(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                               File file) {
+        return fileService.queryPage(pageNo,pageSize,file);
     }
 
     /**

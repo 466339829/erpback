@@ -3,6 +3,7 @@ package com.guigu.erp.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.github.pagehelper.PageInfo;
 import com.guigu.erp.pojo.Module;
 import com.guigu.erp.pojo.ModuleDetails;
 import com.guigu.erp.service.ModuleService;
@@ -28,19 +29,11 @@ public class ModuleController {
 
     //条件分页查询
     @RequestMapping("/page")
-    public IPage<Module> page(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
-                              @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
-                              Module module){
-        //组装查询条件
-        QueryWrapper<Module> queryWrapper =new QueryWrapper<Module>();
+    public PageInfo<Module> page(@RequestParam(value = "pageNo",defaultValue = "1") int pageNo,
+                         @RequestParam(value = "pageSize",defaultValue = "10") int pageSize,
+                         Module module){
 
-        if(!StringUtils.isEmpty(module.getProductName())){
-            queryWrapper.like("product_name",module.getProductName());
-        }
-        if(!StringUtils.isEmpty(module.getCheckTag())){
-            queryWrapper.like("check_tag",module.getCheckTag());
-        }
-        return  moduleService.page(new Page<Module>(pageNo,pageSize),queryWrapper);
+        return  moduleService.queryPage(pageNo,pageSize,module);
     }
 
     /**

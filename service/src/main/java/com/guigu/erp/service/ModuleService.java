@@ -1,6 +1,7 @@
 package com.guigu.erp.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
 import com.guigu.erp.pojo.Module;
 import com.guigu.erp.pojo.ModuleDetails;
 import com.guigu.erp.util.ListUtil;
@@ -18,4 +19,6 @@ public interface ModuleService extends IService<Module> {
     ResultUtil checkTag(int id, String checker);
 
     ResultUtil updateBatchExtend(List<ModuleDetails> moduleDetails);
+
+    PageInfo<Module> queryPage(int pageNo, int pageSize, Module module);
 }

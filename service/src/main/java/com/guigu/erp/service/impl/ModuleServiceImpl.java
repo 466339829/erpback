@@ -2,6 +2,8 @@ package com.guigu.erp.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.guigu.erp.mapper.ModuleMapper;
 import com.guigu.erp.pojo.File;
 import com.guigu.erp.pojo.Module;
@@ -15,6 +17,7 @@ import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -220,5 +223,36 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
             resultUtil.setMessage("操作失败");
             return resultUtil;
         }
+    }
+
+    @Override
+    public PageInfo<Module> queryPage(int pageNo, int pageSize, Module module) {
+        List<Module> moduleList = null;
+        if (module != null) {
+            //追加条件 产品名称
+            //组装查询条件
+            QueryWrapper<Module> queryWrapper =new QueryWrapper<Module>();
+
+            if(!StringUtils.isEmpty(module.getProductName())){
+                queryWrapper.like("product_name",module.getProductName());
+            }
+            if(!StringUtils.isEmpty(module.getCheckTag())){
+                queryWrapper.like("check_tag",module.getCheckTag());
+            }
+            // 追加条件 建档时间开始
+            if (!StringUtils.isEmpty(module.getRegisterTime()))
+                queryWrapper.ge("register_time", module.getRegisterTime());
+            // 追加条件 建档时间结束
+            if (!StringUtils.isEmpty(module.getRegisterTime2()))
+                queryWrapper.le("register_time", module.getRegisterTime2());
+            PageHelper.startPage(pageNo, pageSize);
+            moduleList = this.list(queryWrapper);
+        } else {
+            PageHelper.startPage(pageNo, pageSize);
+            moduleList = this.list();
+        }
+        return new PageInfo<Module>(moduleList);
+
+
     }
 }

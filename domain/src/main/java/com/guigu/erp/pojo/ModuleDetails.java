@@ -48,4 +48,5 @@ public class ModuleDetails {
     private String changer;
     @TableField(value = "designId" ,exist = false)
     private String designId;
+
 }

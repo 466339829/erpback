@@ -50,4 +50,7 @@ public class DesignProcedureDetails {
     @TableField(exist = false)
     List<ModuleDetails> moduleDetails;
 
+    @TableField(value = "checked" ,exist = false)
+    private boolean checked;
+
 }
