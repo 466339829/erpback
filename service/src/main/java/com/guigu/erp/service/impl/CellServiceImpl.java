@@ -13,13 +13,16 @@ import com.guigu.erp.pojo.File;
 import com.guigu.erp.service.CellService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
+
 @Service
 public class CellServiceImpl extends ServiceImpl<CellMapper, Cell> implements CellService {
     @Autowired
     CellMapper cellMapper;
     @Autowired
     FileMapper fileMapper;
+
     @Override
     public boolean inserts(Cell cell, int id) {
         cell.setCheckTag("1");
@@ -30,15 +33,17 @@ public class CellServiceImpl extends ServiceImpl<CellMapper, Cell> implements Ce
         }
         return false;
     }
-//    报错中暂未解决
+
+    //    报错中暂未解决
     @Override
-    public int deleteas(int id ,String productId) {
+    public int deleteas(int id, String productId) {
         int filsupdate = fileMapper.fisupda(productId);
-        if (filsupdate>0){
-            return  cellMapper.deleteById(id);
+        if (filsupdate > 0) {
+            return cellMapper.deleteById(id);
         }
         return 1;
     }
+
     @Override
     public PageInfo<Cell> seles(int pageNo, int pageSize, Cell cell) {
         QueryWrapper<Cell> wrapper = new QueryWrapper<Cell>();
