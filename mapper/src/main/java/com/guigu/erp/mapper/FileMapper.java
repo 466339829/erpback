@@ -13,6 +13,6 @@ public interface FileMapper extends BaseMapper<File> {
     @Update("UPDATE d_file set design_procedure_tag=1 WHERE id=#{id}")
     int filsupdate(int id);
 
-    @Update("UPDATE d_file set design_procedure_tag=0 WHERE id=#{id}")
-    int fisupda(int id);
+    @Update("UPDATE d_file set design_procedure_tag=0 WHERE product_id=#{productId}")
+    int fisupda(String productId);
 }

@@ -1,4 +1,5 @@
 package com.guigu.erp.controller;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import com.guigu.erp.pojo.Cell;
@@ -24,28 +25,37 @@ public class CellController {
     CellService cellService;
     @Autowired
     FileService fileService;
+
     @RequestMapping("/cesint")
-        public boolean cesint(Cell cell, int id){
+    public boolean cesint(Cell cell, int id) {
         System.out.println(id);
         boolean inserts = cellService.inserts(cell, id);
-        return  inserts?true:false;
+        return inserts ? true : false;
 
     }
+
     @RequestMapping("/fuHe")
-   @ResponseBody
-    public  PageInfo<Cell> fuHe(@RequestParam(defaultValue = "1") int pageNo,
-                           @RequestParam(defaultValue = "5") int pageSize,
-                           Cell cell){
+    @ResponseBody
+    public PageInfo<Cell> fuHe(@RequestParam(defaultValue = "1") int pageNo,
+                               @RequestParam(defaultValue = "5") int pageSize,
+                               Cell cell) {
         PageInfo<Cell> seles = cellService.seles(pageNo, pageSize, cell);
         return seles;
-   }
-   @RequestMapping("/fuHebyid")
-    public Cell fuHebyid(int id){
-       return  cellService.getById(id);
-   }
-   //取消复核修改后删除
+    }
+
+    @RequestMapping("/fuHebyid")
+    public Cell fuHebyid(int id) {
+        return cellService.getById(id);
+    }
+
+    //取消复核修改后删除
     @RequestMapping("/fudeleteid")
-    public int fudeleteid(int id){
-        return  cellService.deleteas(id);
+    public int fudeleteid(int id,String productId) {
+        return cellService.deleteas(id,productId);
+    }
+    //成功复核提交
+    @RequestMapping("/updateio")
+    public Boolean fudeinset(Cell cell) {
+        return cellService.updateById(cell);
     }
 }

@@ -8,6 +8,6 @@ import com.guigu.erp.pojo.Cell;
 public interface CellService extends IService<Cell> {
     public boolean inserts(Cell cell,int id);
 
-    public int deleteas(int id);
+    public int deleteas(int id,String productId);
     PageInfo<Cell> seles(int pageNo,int pageSize,Cell cell);
 }
