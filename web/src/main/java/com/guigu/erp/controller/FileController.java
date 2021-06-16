@@ -156,4 +156,12 @@ public class FileController {
 
     }
 
+    @RequestMapping("/FilePages2")
+    public IPage<File> FilePages2(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
+                                 @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
+
+
+        return fileService.page(new Page<File>(pageNo, pageSize));
+    }
+
 }
