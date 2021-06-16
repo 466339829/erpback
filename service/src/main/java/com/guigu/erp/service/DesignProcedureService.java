@@ -14,4 +14,6 @@ public interface DesignProcedureService extends IService<DesignProcedure> {
 
 
     boolean delete(DesignProcedure designProcedure);
+
+    boolean checkDesignModuleTag(int id);
 }

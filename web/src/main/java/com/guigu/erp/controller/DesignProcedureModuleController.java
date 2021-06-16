@@ -18,7 +18,7 @@ public class DesignProcedureModuleController {
     private DesignProcedureModuleService designProcedureModuleService;
 
     @RequestMapping(value = "/addDesignProcedureModule",produces = "application/json;charset=utf-8")
-    public ResultUtil setRoleMenu(@RequestBody List<DesignProcedureModule> designProcedureModules){
+    public ResultUtil addDesignProcedureModule(@RequestBody List<DesignProcedureModule> designProcedureModules){
         return designProcedureModuleService.saveBatchExtend(designProcedureModules);
     }
 
@@ -30,5 +30,15 @@ public class DesignProcedureModuleController {
     @RequestMapping("/selectByPId/{id}")
     public List<DesignProcedureModule> selectByPId(@PathVariable int id){
         return  designProcedureModuleService.selectByPId(id);
+    }
+
+    @RequestMapping(value = "/updateDesignProcedureModule",produces = "application/json;charset=utf-8")
+    public ResultUtil updateDesignProcedureModule(@RequestBody List<DesignProcedureModule> designProcedureModules){
+        return designProcedureModuleService.updateBatchExtend(designProcedureModules);
+    }
+
+    @RequestMapping(value = "/updateDesignProcedureModuleById",produces = "application/json;charset=utf-8")
+    public ResultUtil updateDesignProcedureModuleById(@RequestBody List<DesignProcedureModule> designProcedureModules){
+        return designProcedureModuleService.updateBatchExtendById(designProcedureModules);
     }
 }
