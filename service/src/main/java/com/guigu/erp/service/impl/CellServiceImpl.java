@@ -34,12 +34,12 @@ public class CellServiceImpl extends ServiceImpl<CellMapper, Cell> implements Ce
         return false;
     }
 
-//    报错中暂未解决
+    //    报错中暂未解决
     @Override
-    public int deleteas(int id) {
-        int filsupdate = fileMapper.filsupdate(id);
-        if (filsupdate>0){
-            return  cellMapper.deleteById(id);
+    public int deleteas(int id, String productId) {
+        int filsupdate = fileMapper.fisupda(productId);
+        if (filsupdate > 0) {
+            return cellMapper.deleteById(id);
         }
         return 1;
     }
