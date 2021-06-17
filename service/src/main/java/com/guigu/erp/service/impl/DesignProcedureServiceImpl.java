@@ -35,6 +35,14 @@ public class DesignProcedureServiceImpl extends ServiceImpl<DesignProcedureMappe
             if (designProcedure.getDesignModuleTag() != null && designProcedure.getDesignModuleTag() != "")
                 queryWrapper.eq("design_module_tag", designProcedure.getDesignModuleTag());
 
+            // 追加条件 建档时间开始
+            if (designProcedure.getRegisterTime() != null)
+                queryWrapper.ge("register_time", designProcedure.getRegisterTime());
+            // 追加条件 建档时间结束
+            if (designProcedure.getRegisterTime2() != null )
+                queryWrapper.le("register_time", designProcedure.getRegisterTime2());
+
+
             PageHelper.startPage(pageNo, pageSize);
             designProcedureList = this.list(queryWrapper);
         } else {
@@ -64,7 +72,7 @@ public class DesignProcedureServiceImpl extends ServiceImpl<DesignProcedureMappe
         procedure.setCheckTime(designProcedure.getCheckTime());
         procedure.setCheckSuggestion(designProcedure.getCheckSuggestion());
         //1: 审核通过
-        procedure.setCheckTag("1");
+        procedure.setDesignModuleTag("2");
         int result = designProcedureMapper.updateById(procedure);
         if (result>0)
             return true;
@@ -77,6 +85,14 @@ public class DesignProcedureServiceImpl extends ServiceImpl<DesignProcedureMappe
     public boolean delete(DesignProcedure designProcedure) {
 
         return false;
+    }
+
+    @Override
+    public boolean checkDesignModuleTag(int id) {
+        DesignProcedure designProcedure = this.getById(id);
+        /*工序物料设计标志 g002-0: 未设计 g002-1: 已提交 g002-2: 已审核*/
+        designProcedure.setDesignModuleTag("1");
+        return this.updateById(designProcedure);
     }
 
 }

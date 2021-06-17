@@ -23,7 +23,7 @@ public class ModuleController {
 
     //添加物料组成
     @RequestMapping(value = "/addModuleDetails",produces = "application/json;charset=utf-8")
-    public ResultUtil setRoleMenu(@RequestBody List<ModuleDetails> moduleDetails){
+    public ResultUtil addModuleDetails(@RequestBody List<ModuleDetails> moduleDetails){
         return moduleService.saveBatchExtend(moduleDetails);
     }
 

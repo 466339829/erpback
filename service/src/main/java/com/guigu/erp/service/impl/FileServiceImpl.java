@@ -180,9 +180,12 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             //类型
             if (file.getType() != null && file.getType() != "")
                 queryWrapper.eq("type", file.getType());
-            //design_module_tag物料组成标志0
+            //design_module_tag物料组成标志0    designModuleTag:1,
             if (file.getDesignModuleTag() != null && file.getDesignModuleTag() != "")
                 queryWrapper.eq("design_module_tag", file.getDesignModuleTag());
+            // designProcedureTag:1,
+            if (file.getDesignProcedureTag() != null && file.getDesignProcedureTag() != "")
+                queryWrapper.eq("design_procedure_tag", file.getDesignProcedureTag());
             PageHelper.startPage(pageNo, pageSize);
             fileList = this.list(queryWrapper);
         } else {

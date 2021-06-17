@@ -46,4 +46,9 @@ public class DesignProcedureController {
     public boolean delete(DesignProcedure designProcedure) {
         return designProcedureService.delete(designProcedure);
     }
+
+    @RequestMapping("/checkDesignModuleTag/{id}")
+    public boolean checkDesignModuleTag(@PathVariable int id) {
+        return designProcedureService.checkDesignModuleTag(id);
+    }
 }

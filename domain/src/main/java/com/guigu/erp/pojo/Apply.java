@@ -1,11 +1,22 @@
 package com.guigu.erp.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
+@TableName("m_apply")
 public class Apply {
+    @TableId(type = IdType.AUTO)
     private Integer id;
-
+    @TableField("apply_id")
     private String applyId;
 
     private String productId;
@@ -24,143 +35,21 @@ public class Apply {
 
     private String register;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date registerTime;
 
     private String checker;
 
     private String checkSuggestion;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date checkTime;
 
     private String checkTag;
 
     private String manufactureTag;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getApplyId() {
-        return applyId;
-    }
-
-    public void setApplyId(String applyId) {
-        this.applyId = applyId == null ? null : applyId.trim();
-    }
-
-    public String getProductId() {
-        return productId;
-    }
-
-    public void setProductId(String productId) {
-        this.productId = productId == null ? null : productId.trim();
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName == null ? null : productName.trim();
-    }
-
-    public String getProductDescribe() {
-        return productDescribe;
-    }
-
-    public void setProductDescribe(String productDescribe) {
-        this.productDescribe = productDescribe == null ? null : productDescribe.trim();
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getDesigner() {
-        return designer;
-    }
-
-    public void setDesigner(String designer) {
-        this.designer = designer == null ? null : designer.trim();
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getRegister() {
-        return register;
-    }
-
-    public void setRegister(String register) {
-        this.register = register == null ? null : register.trim();
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public String getChecker() {
-        return checker;
-    }
-
-    public void setChecker(String checker) {
-        this.checker = checker == null ? null : checker.trim();
-    }
-
-    public String getCheckSuggestion() {
-        return checkSuggestion;
-    }
-
-    public void setCheckSuggestion(String checkSuggestion) {
-        this.checkSuggestion = checkSuggestion == null ? null : checkSuggestion.trim();
-    }
-
-    public Date getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
-    }
-
-    public String getCheckTag() {
-        return checkTag;
-    }
-
-    public void setCheckTag(String checkTag) {
-        this.checkTag = checkTag == null ? null : checkTag.trim();
-    }
-
-    public String getManufactureTag() {
-        return manufactureTag;
-    }
-
-    public void setManufactureTag(String manufactureTag) {
-        this.manufactureTag = manufactureTag == null ? null : manufactureTag.trim();
-    }
 }

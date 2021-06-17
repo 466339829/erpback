@@ -33,4 +33,18 @@ public class IDUtil {
             return "200" + dateStr +  "0001";
         }
     }
+    //生产计划编号  300+当前日期+4位流水号
+    public static String getApplyId(String longId){
+        String substring ="";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String dateStr = sdf.format(new Date());
+        if (longId != null) {
+            substring = longId.substring(longId.length()-4);
+            AtomicLong at = new AtomicLong(Long.parseLong(substring));
+            Long atLong = at.incrementAndGet();
+            return "300" +dateStr + String.format("%04d", atLong);
+        } else {
+            return "300" + dateStr +  "0001";
+        }
+    }
 }

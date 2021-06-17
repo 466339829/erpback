@@ -10,4 +10,8 @@ public interface DesignProcedureModuleService extends IService<DesignProcedureMo
     ResultUtil saveBatchExtend(List<DesignProcedureModule> designProcedureModules);
 
     List<DesignProcedureModule> selectByPId(int id);
+
+    ResultUtil updateBatchExtend(List<DesignProcedureModule> designProcedureModules);
+
+    ResultUtil updateBatchExtendById(List<DesignProcedureModule> designProcedureModules);
 }
