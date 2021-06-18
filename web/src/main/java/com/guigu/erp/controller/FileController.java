@@ -55,7 +55,7 @@ public class FileController {
     public PageInfo<File> page(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
                                @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                File file) {
-        return fileService.queryPage(pageNo,pageSize,file);
+        return fileService.queryPage(pageNo, pageSize, file);
     }
 
     /**
@@ -158,7 +158,7 @@ public class FileController {
 
     @RequestMapping("/FilePages2")
     public IPage<File> FilePages2(@RequestParam(value = "pageNo", defaultValue = "1") int pageNo,
-                                 @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
+                                  @RequestParam(value = "pageSize", defaultValue = "5") int pageSize) {
 
 
         return fileService.page(new Page<File>(pageNo, pageSize));

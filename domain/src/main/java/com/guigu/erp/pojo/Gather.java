@@ -1,9 +1,19 @@
 package com.guigu.erp.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
+@TableName("s_gather")
 public class Gather {
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private String gatherId;
@@ -23,154 +33,22 @@ public class Gather {
     private String remark;
 
     private String register;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date registerTime;
 
     private String checker;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date checkTime;
 
     private String checkTag;
 
     private String attemper;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date attemperTime;
 
     private String gatherTag;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getGatherId() {
-        return gatherId;
-    }
-
-    public void setGatherId(String gatherId) {
-        this.gatherId = gatherId == null ? null : gatherId.trim();
-    }
-
-    public String getStorer() {
-        return storer;
-    }
-
-    public void setStorer(String storer) {
-        this.storer = storer == null ? null : storer.trim();
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason == null ? null : reason.trim();
-    }
-
-    public String getReasonexact() {
-        return reasonexact;
-    }
-
-    public void setReasonexact(String reasonexact) {
-        this.reasonexact = reasonexact == null ? null : reasonexact.trim();
-    }
-
-    public BigDecimal getAmountSum() {
-        return amountSum;
-    }
-
-    public void setAmountSum(BigDecimal amountSum) {
-        this.amountSum = amountSum;
-    }
-
-    public BigDecimal getCostPriceSum() {
-        return costPriceSum;
-    }
-
-    public void setCostPriceSum(BigDecimal costPriceSum) {
-        this.costPriceSum = costPriceSum;
-    }
-
-    public BigDecimal getGatheredAmountSum() {
-        return gatheredAmountSum;
-    }
-
-    public void setGatheredAmountSum(BigDecimal gatheredAmountSum) {
-        this.gatheredAmountSum = gatheredAmountSum;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getRegister() {
-        return register;
-    }
-
-    public void setRegister(String register) {
-        this.register = register == null ? null : register.trim();
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public String getChecker() {
-        return checker;
-    }
-
-    public void setChecker(String checker) {
-        this.checker = checker == null ? null : checker.trim();
-    }
-
-    public Date getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
-    }
-
-    public String getCheckTag() {
-        return checkTag;
-    }
-
-    public void setCheckTag(String checkTag) {
-        this.checkTag = checkTag == null ? null : checkTag.trim();
-    }
-
-    public String getAttemper() {
-        return attemper;
-    }
-
-    public void setAttemper(String attemper) {
-        this.attemper = attemper == null ? null : attemper.trim();
-    }
-
-    public Date getAttemperTime() {
-        return attemperTime;
-    }
-
-    public void setAttemperTime(Date attemperTime) {
-        this.attemperTime = attemperTime;
-    }
-
-    public String getGatherTag() {
-        return gatherTag;
-    }
-
-    public void setGatherTag(String gatherTag) {
-        this.gatherTag = gatherTag == null ? null : gatherTag.trim();
-    }
 }

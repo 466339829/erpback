@@ -47,4 +47,18 @@ public class IDUtil {
             return "300" + dateStr +  "0001";
         }
     }
+    //入库单编号	401+当前日期+4位流水号
+    public static String getGatherId(String longId){
+        String substring ="";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String dateStr = sdf.format(new Date());
+        if (longId != null) {
+            substring = longId.substring(longId.length()-4);
+            AtomicLong at = new AtomicLong(Long.parseLong(substring));
+            Long atLong = at.incrementAndGet();
+            return "401" +dateStr + String.format("%04d", atLong);
+        } else {
+            return "401" + dateStr +  "0001";
+        }
+    }
 }
