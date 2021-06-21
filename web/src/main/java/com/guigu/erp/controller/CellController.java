@@ -97,7 +97,6 @@ public class CellController {
     @RequestMapping("/updateStatyquery")
     @ResponseBody
     public Boolean updateStatyquery(Cell cell){
-        System.out.println(111);
         cell.setCheckTag("1");
         return cellService.updateById(cell);
     }

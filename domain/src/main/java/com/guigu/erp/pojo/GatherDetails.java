@@ -1,8 +1,20 @@
 package com.guigu.erp.pojo;
 
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
+@Data
+@TableName("s_gather_details")
 public class GatherDetails {
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private Integer parentId;
@@ -25,91 +37,46 @@ public class GatherDetails {
 
     private String gatherTag;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    @TableField(value = "gatherId", exist = false)
+    private String gatherId;
 
-    public Integer getParentId() {
-        return parentId;
-    }
 
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
+    @TableField(value = "storer", exist = false)
+    private String storer;
 
-    public String getProductId() {
-        return productId;
-    }
+    @TableField(value = "reason", exist = false)
+    private String reason;
 
-    public void setProductId(String productId) {
-        this.productId = productId == null ? null : productId.trim();
-    }
+    @TableField(value = "reasonexact", exist = false)
+    private String reasonexact;
 
-    public String getProductName() {
-        return productName;
-    }
+    @TableField(value = "amountSum", exist = false)
+    private BigDecimal amountSum;
 
-    public void setProductName(String productName) {
-        this.productName = productName == null ? null : productName.trim();
-    }
+    @TableField(value = "costPriceSum", exist = false)
+    private BigDecimal costPriceSum;
 
-    public String getProductDescribe() {
-        return productDescribe;
-    }
+    @TableField(value = "gatheredAmountSum", exist = false)
+    private BigDecimal gatheredAmountSum;
 
-    public void setProductDescribe(String productDescribe) {
-        this.productDescribe = productDescribe == null ? null : productDescribe.trim();
-    }
+    @TableField(value = "remark", exist = false)
+    private String remark;
 
-    public BigDecimal getAmount() {
-        return amount;
-    }
+    @TableField(value = "register", exist = false)
+    private String register;
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
+    @TableField(value = "registerTime", exist = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date registerTime;
 
-    public String getAmountUnit() {
-        return amountUnit;
-    }
-
-    public void setAmountUnit(String amountUnit) {
-        this.amountUnit = amountUnit == null ? null : amountUnit.trim();
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getGatheredAmount() {
-        return gatheredAmount;
-    }
-
-    public void setGatheredAmount(BigDecimal gatheredAmount) {
-        this.gatheredAmount = gatheredAmount;
-    }
-
-    public String getGatherTag() {
-        return gatherTag;
-    }
-
-    public void setGatherTag(String gatherTag) {
-        this.gatherTag = gatherTag == null ? null : gatherTag.trim();
-    }
+    @TableField(value = "checkTag", exist = false)
+    private String checkTag;
+    @TableField(value = "checker", exist = false)
+    private String checker;
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @TableField(value = "checkTime", exist = false)
+    private Date checkTime;
 }
