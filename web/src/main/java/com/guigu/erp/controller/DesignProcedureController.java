@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/designProcedure")
 public class DesignProcedureController {
@@ -51,4 +53,11 @@ public class DesignProcedureController {
     public boolean checkDesignModuleTag(@PathVariable int id) {
         return designProcedureService.checkDesignModuleTag(id);
     }
+
+    //工序审核
+    @RequestMapping("/checkTag")
+    public boolean checkTag(DesignProcedure designProcedure) {
+        return designProcedureService.checkTag(designProcedure);
+    }
+
 }

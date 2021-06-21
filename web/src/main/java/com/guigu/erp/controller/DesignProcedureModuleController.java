@@ -41,4 +41,14 @@ public class DesignProcedureModuleController {
     public ResultUtil updateDesignProcedureModuleById(@RequestBody List<DesignProcedureModule> designProcedureModules){
         return designProcedureModuleService.updateBatchExtendById(designProcedureModules);
     }
+
+    @RequestMapping("/updateByPId/{id}")
+    public boolean updateByPId(@PathVariable int id){
+        return  designProcedureModuleService.updateByPId(id);
+    }
+    //变更
+    @RequestMapping("/updateChangeByPId/{id}")
+    public boolean updateChangeByPId(@PathVariable int id){
+        return  designProcedureModuleService.updateChangeByPId(id);
+    }
 }

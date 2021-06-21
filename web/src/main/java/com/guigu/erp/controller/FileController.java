@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+
 @RestController
 @RequestMapping("/files")
 public class FileController {
@@ -72,12 +74,12 @@ public class FileController {
     /**
      * 复核通过
      *
-     * @param id
+     * @param
      * @return
      */
-    @RequestMapping("/checkTag")
-    public boolean checkTag(int id, String checker) {
-        return fileService.checkTag(id, checker);
+    @RequestMapping(value = "/checkTag", produces = "application/json;charset=utf-8")
+    public boolean checkTag(File file) {
+        return fileService.checkTag(file);
     }
 
     /**
@@ -156,4 +158,8 @@ public class FileController {
 
     }
 
+    @RequestMapping("/selectByProductId")
+    public boolean selectByProductId(String productId){
+        return fileService.selectByProductId(productId);
+    }
 }

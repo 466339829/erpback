@@ -69,4 +69,5 @@ public class ModuleController {
     public ResultUtil updateModuleDetails(@RequestBody List<ModuleDetails> moduleDetails){
         return moduleService.updateBatchExtend(moduleDetails);
     }
+
 }

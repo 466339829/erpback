@@ -26,4 +26,9 @@ public class Users {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @TableField("creationDate")
     private Date creationDate;
+
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @TableField(exist = false)
+    private Date creationDate2;
 }

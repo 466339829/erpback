@@ -5,10 +5,12 @@ import com.github.pagehelper.PageInfo;
 import com.guigu.erp.pojo.File;
 import com.guigu.erp.util.ResultUtil;
 
+import java.util.Date;
+
 public interface FileService extends IService<File> {
     boolean insert(File file);
 
-    boolean checkTag(int id,String checker);
+    boolean checkTag(File file);
 
     boolean updateFile(File file);
 
@@ -21,4 +23,6 @@ public interface FileService extends IService<File> {
     ResultUtil checkName(String name);
 
     PageInfo queryPage(int pageNo, int pageSize, File file);
+
+    boolean selectByProductId(String productId);
 }

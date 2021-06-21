@@ -34,6 +34,7 @@ public class ModuleDetailsServiceImpl extends ServiceImpl<ModuleDetailsMapper, M
         Module module = moduleService.getById(parentId);
         //物料总成本
         module.setCostPriceSum(BigDecimal.valueOf(costPriceSum));
+        module.setCheckTag("0");
         boolean result2 = moduleService.updateById(module);
         ResultUtil<Object> resultUtil = new ResultUtil<>();
         if (result1==true && result2==true ){

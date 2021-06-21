@@ -42,6 +42,15 @@ public class DesignProcedureServiceImpl extends ServiceImpl<DesignProcedureMappe
             if (designProcedure.getRegisterTime2() != null )
                 queryWrapper.le("register_time", designProcedure.getRegisterTime2());
 
+            // 追加条件 产品i级分类编号
+            if (designProcedure.getFirstKindId() != null && designProcedure.getFirstKindId() != "")
+                queryWrapper.eq("first_kind_id", designProcedure.getFirstKindId());
+            // 追加条件 产品ii级分类编号
+            if (designProcedure.getSecondKindId() != null && designProcedure.getSecondKindId() != "")
+                queryWrapper.eq("second_kind_id", designProcedure.getSecondKindId());
+            // 追加条件 产品iii级分类编号
+            if (designProcedure.getThirdKindId() != null && designProcedure.getThirdKindId() != "")
+                queryWrapper.eq("third_kind_id", designProcedure.getThirdKindId());
 
             PageHelper.startPage(pageNo, pageSize);
             designProcedureList = this.list(queryWrapper);
@@ -94,5 +103,21 @@ public class DesignProcedureServiceImpl extends ServiceImpl<DesignProcedureMappe
         designProcedure.setDesignModuleTag("1");
         return this.updateById(designProcedure);
     }
+
+    //工序审核
+    @Override
+    public boolean checkTag(DesignProcedure designProcedure) {
+        DesignProcedure procedure = this.getById(designProcedure.getId());
+        procedure.setChecker(designProcedure.getChecker());
+        procedure.setCheckTime(designProcedure.getCheckTime());
+        procedure.setCheckSuggestion(designProcedure.getCheckSuggestion());
+        procedure.setCheckTag(designProcedure.getCheckTag());
+        int result = designProcedureMapper.updateById(procedure);
+        if (result>0)
+            return true;
+        else
+            return false;
+    }
+
 
 }

@@ -26,17 +26,17 @@ public class DesignProcedureDetails {
 
     private String procedureName;
 
-    private BigDecimal labourHourAmount;
+    private Float labourHourAmount;
 
     private String procedureDescribe;
 
     private String amountUnit;
 
-    private BigDecimal costPrice;
+    private Float costPrice;
 
-    private BigDecimal subtotal;
+    private Float subtotal;
 
-    private BigDecimal moduleSubtotal;
+    private Float moduleSubtotal;
 
     private String register;
 
@@ -52,5 +52,21 @@ public class DesignProcedureDetails {
 
     @TableField(value = "checked" ,exist = false)
     private boolean checked;
+
+
+    @TableField(value = "goodsId" ,exist = false)
+    private String goodsId;
+
+    @TableField(value = "designProcedureDescribe" ,exist = false)
+    private String designProcedureDescribe;
+
+    @TableField(value = "changer" ,exist = false)
+    private String changer;
+
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @TableField(value = "changeTime" ,exist = false)
+    private Date changeTime;
+
 
 }

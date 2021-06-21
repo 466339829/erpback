@@ -21,4 +21,6 @@ public interface ModuleService extends IService<Module> {
     ResultUtil updateBatchExtend(List<ModuleDetails> moduleDetails);
 
     PageInfo<Module> queryPage(int pageNo, int pageSize, Module module);
+
+
 }

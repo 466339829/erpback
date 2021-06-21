@@ -39,6 +39,11 @@ public class Apply {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date registerTime;
 
+    @TableField(exist = false)
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date registerTime2;
+
     private String checker;
 
     private String checkSuggestion;
@@ -46,6 +51,11 @@ public class Apply {
     @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date checkTime;
+
+    @TableField(exist = false)
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date checkTime2;
 
     private String checkTag;
 
