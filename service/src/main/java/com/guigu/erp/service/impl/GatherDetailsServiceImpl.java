@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -44,7 +45,11 @@ public class GatherDetailsServiceImpl extends ServiceImpl<GatherDetailsMapper, G
         int insert = gatherMapper.insert(gather);
         for (GatherDetails men : gatherDetails) {
             men.setParentId(gather.getId());
+            BigDecimal shul= men.getAmount().multiply(men.getCostPrice());
+            men.setSubtotal(shul);
         }
+
+
         boolean result = this.saveBatch(gatherDetails);
         if (insert > 0 && result == true)
             return true;
