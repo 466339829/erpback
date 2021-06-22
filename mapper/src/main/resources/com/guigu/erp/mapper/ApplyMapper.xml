@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.guigu.erp.mapper.ApplyMapper" >
+    <!--定义sql片断：用于定义重复的语句片断，以备重复使用-->
+    <sql id="apply_select_where">
+        <where>
+            <if test="registerTime !=null ">
+                and a.register_time &gt;= #{registerTime}
+            </if>
+            <if test="registerTime2 !=null ">
+                and a.register_time &lt;= #{registerTime2}
+            </if>
+            <if test="checkTag !=null and checkTag !=''">
+                and a.check_tag = #{checkTag}
+            </if>
+            <if test="applyId !=null and applyId !=''">
+                and a.apply_id = #{applyId}
+            </if>
+        </where>
+    </sql>
+
+    <!--按条件查询-->
+    <select id="applyList" parameterType="Apply" resultType="Apply">
+        select distinct a.`apply_id`,a.`register`,a.`register_time`,
+        a.`checker`,a.`check_time`,a.`check_suggestion`,
+        a.`remark`,a.`check_tag` from `m_apply` a
+         <include refid="apply_select_where"></include>
+    </select>
+
+</mapper>

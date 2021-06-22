@@ -1,9 +1,19 @@
 package com.guigu.erp.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
+@Data
+@TableName("s_pay")
 public class Pay {
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private String payId;
@@ -14,163 +24,35 @@ public class Pay {
 
     private String reasonexact;
 
-    private BigDecimal amountSum;
+    private Float amountSum;
 
-    private BigDecimal costPriceSum;
+    private Float costPriceSum;
 
-    private BigDecimal paidAmountSum;
+    private Float paidAmountSum;
 
     private String remark;
 
     private String register;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date registerTime;
 
     private String checker;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date checkTime;
 
     private String checkTag;
 
     private String attemper;
 
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date attemperTime;
 
     private String payTag;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getPayId() {
-        return payId;
-    }
-
-    public void setPayId(String payId) {
-        this.payId = payId == null ? null : payId.trim();
-    }
-
-    public String getStorer() {
-        return storer;
-    }
-
-    public void setStorer(String storer) {
-        this.storer = storer == null ? null : storer.trim();
-    }
-
-    public String getReason() {
-        return reason;
-    }
-
-    public void setReason(String reason) {
-        this.reason = reason == null ? null : reason.trim();
-    }
-
-    public String getReasonexact() {
-        return reasonexact;
-    }
-
-    public void setReasonexact(String reasonexact) {
-        this.reasonexact = reasonexact == null ? null : reasonexact.trim();
-    }
-
-    public BigDecimal getAmountSum() {
-        return amountSum;
-    }
-
-    public void setAmountSum(BigDecimal amountSum) {
-        this.amountSum = amountSum;
-    }
-
-    public BigDecimal getCostPriceSum() {
-        return costPriceSum;
-    }
-
-    public void setCostPriceSum(BigDecimal costPriceSum) {
-        this.costPriceSum = costPriceSum;
-    }
-
-    public BigDecimal getPaidAmountSum() {
-        return paidAmountSum;
-    }
-
-    public void setPaidAmountSum(BigDecimal paidAmountSum) {
-        this.paidAmountSum = paidAmountSum;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark == null ? null : remark.trim();
-    }
-
-    public String getRegister() {
-        return register;
-    }
-
-    public void setRegister(String register) {
-        this.register = register == null ? null : register.trim();
-    }
-
-    public Date getRegisterTime() {
-        return registerTime;
-    }
-
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
-
-    public String getChecker() {
-        return checker;
-    }
-
-    public void setChecker(String checker) {
-        this.checker = checker == null ? null : checker.trim();
-    }
-
-    public Date getCheckTime() {
-        return checkTime;
-    }
-
-    public void setCheckTime(Date checkTime) {
-        this.checkTime = checkTime;
-    }
-
-    public String getCheckTag() {
-        return checkTag;
-    }
-
-    public void setCheckTag(String checkTag) {
-        this.checkTag = checkTag == null ? null : checkTag.trim();
-    }
-
-    public String getAttemper() {
-        return attemper;
-    }
-
-    public void setAttemper(String attemper) {
-        this.attemper = attemper == null ? null : attemper.trim();
-    }
-
-    public Date getAttemperTime() {
-        return attemperTime;
-    }
-
-    public void setAttemperTime(Date attemperTime) {
-        this.attemperTime = attemperTime;
-    }
-
-    public String getPayTag() {
-        return payTag;
-    }
-
-    public void setPayTag(String payTag) {
-        this.payTag = payTag == null ? null : payTag.trim();
-    }
 }

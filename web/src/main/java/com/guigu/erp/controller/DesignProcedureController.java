@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/designProcedure")
 public class DesignProcedureController {
@@ -42,13 +44,20 @@ public class DesignProcedureController {
     }
 
     //审核不通过
-    @RequestMapping("/delete")
-    public boolean delete(DesignProcedure designProcedure) {
-        return designProcedureService.delete(designProcedure);
+    @RequestMapping("/delete/{id}")
+    public boolean delete(@PathVariable int id) {
+        return designProcedureService.delete(id);
     }
 
     @RequestMapping("/checkDesignModuleTag/{id}")
     public boolean checkDesignModuleTag(@PathVariable int id) {
         return designProcedureService.checkDesignModuleTag(id);
     }
+
+    //工序审核
+    @RequestMapping("/checkTag")
+    public boolean checkTag(DesignProcedure designProcedure) {
+        return designProcedureService.checkTag(designProcedure);
+    }
+
 }

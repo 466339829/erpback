@@ -1,5 +1,6 @@
 package com.guigu.erp.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guigu.erp.mapper.DesignProcedureDetailsMapper;
@@ -11,6 +12,7 @@ import com.guigu.erp.pojo.DesignProcedureDetails;
 import com.guigu.erp.pojo.DesignProcedureModule;
 import com.guigu.erp.pojo.ModuleDetails;
 import com.guigu.erp.service.DesignProcedureModuleService;
+import com.guigu.erp.service.ModuleDetailsService;
 import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,10 @@ public class DesignProcedureModuleServiceImpl extends ServiceImpl<DesignProcedur
     private DesignProcedureMapper designProcedureMapper;
     @Autowired
     private ModuleDetailsMapper moduleDetailsMapper;
+    @Autowired
+    private DesignProcedureModuleMapper designProcedureModuleMapper;
+    @Autowired
+    private ModuleDetailsService moduleDetailsService;
     //添加 产品生产工序物料明细
     @Transactional
     @Override
@@ -35,29 +41,25 @@ public class DesignProcedureModuleServiceImpl extends ServiceImpl<DesignProcedur
         DesignProcedureDetails designProcedureDetails = designProcedureDetailsMapper.selectById(designProcedureModules.get(0).getParentId());
         //当前工序物料标志
         designProcedureDetails.setDesignModuleTag("1");
-        int result1 = designProcedureDetailsMapper.updateById(designProcedureDetails);
-
-        //产品生产工序
-       /* DesignProcedure designProcedure = designProcedureMapper.selectById(designProcedureDetails.getParentId());
-        //工序物料设计标志已提交
-        designProcedure.setDesignModuleTag("1");
-        int result2 = designProcedureMapper.updateById(designProcedure);*/
-
         //工序物料序号details_number+1
         int j = 1;
         int result = 0;
+        float moduleSubtotal = 0;
         for (DesignProcedureModule designProcedureModule: designProcedureModules){
-            QueryWrapper<ModuleDetails> queryWrapper = new QueryWrapper<>();
-            queryWrapper.eq("id",designProcedureModule.getId());
-            ModuleDetails moduleDetails = moduleDetailsMapper.selectOne(queryWrapper);
+            ModuleDetails moduleDetails =moduleDetailsMapper.selectById(designProcedureModule.getId());
             int i =moduleDetails.getResidualAmount()-((designProcedureModule.getAmount()).intValue());
             moduleDetails.setResidualAmount(Integer.valueOf(i));
-            moduleDetails.setAmount(i);
+            //可用数量
             result = moduleDetailsMapper.updateById(moduleDetails);
             designProcedureModule.setDetailsNumber(j);
+            //计算当前工序物料成本小计 工序明细
+            moduleSubtotal += (designProcedureModule.getSubtotal()).floatValue();
             j++;
         }
-        System.out.println(result);
+        designProcedureDetails.setModuleSubtotal(moduleSubtotal);
+        //工序明细 修改当前工序物料标志  计算当前工序物料成本小计
+        int result1 = designProcedureDetailsMapper.updateById(designProcedureDetails);
+
         boolean result3 = this.saveBatch(designProcedureModules);
         ResultUtil<Object> resultUtil = new ResultUtil<>();
         if (result1==1 && result3==true){
@@ -115,5 +117,86 @@ public class DesignProcedureModuleServiceImpl extends ServiceImpl<DesignProcedur
             resultUtil.setMessage("操作失败");
             return resultUtil;
         }
+    }
+
+    @Transactional
+    @Override
+    public boolean updateByPId(int parentId) {
+        //当前parent_id 的所有工序物料明细
+        QueryWrapper<DesignProcedureModule> designProcedureModuleQueryWrapper = new QueryWrapper<>();
+        designProcedureModuleQueryWrapper.eq("parent_id",parentId);
+        List<DesignProcedureModule> list = this.list(designProcedureModuleQueryWrapper);
+
+        int result1 = 0;
+        for (DesignProcedureModule dpm :list){
+            List<ModuleDetails> moduleDetails = moduleDetailsMapper.selectByPid(parentId, dpm.getId());
+            //residual_amount
+            for (ModuleDetails md :moduleDetails ){
+                if (md.getProductId().equals(dpm.getProductId())){
+                    md.setResidualAmount(md.getResidualAmount()+(dpm.getAmount()).intValue());
+                    continue;
+                }
+            }
+            boolean result = moduleDetailsService.updateBatchById(moduleDetails);
+            result1++;
+        }
+
+        //删除
+        boolean remove = this.remove(designProcedureModuleQueryWrapper);
+
+
+        //当前工序物料变更标志design_module_change_tag module_subtotal  design_module_tag
+        DesignProcedureDetails designProcedureDetails = designProcedureDetailsMapper.selectById(parentId);
+        designProcedureDetails.setDesignModuleTag("1");
+        /*designProcedureDetails.setDesignModuleChangeTag("0");*/
+        designProcedureDetails.setModuleSubtotal(0f);
+        int result2 = designProcedureDetailsMapper.updateById(designProcedureDetails);
+
+        if (result1==list.size() && result2 >0 && remove==true)
+            return true;
+        return false;
+    }
+
+    @Override
+    public boolean updateChangeByPId(int parentId) {
+        //当前parent_id 的所有工序物料明细
+        QueryWrapper<DesignProcedureModule> designProcedureModuleQueryWrapper = new QueryWrapper<>();
+        designProcedureModuleQueryWrapper.eq("parent_id",parentId);
+        List<DesignProcedureModule> list = this.list(designProcedureModuleQueryWrapper);
+
+        int result1 = 0;
+        boolean remove = true;
+        if (list.size()>0) {
+            for (DesignProcedureModule dpm : list) {
+                List<ModuleDetails> moduleDetails = moduleDetailsMapper.selectByPid(parentId, dpm.getId());
+                //residual_amount
+                for (ModuleDetails md : moduleDetails) {
+                    if (md.getProductId().equals(dpm.getProductId())) {
+                        md.setResidualAmount(md.getResidualAmount() + (dpm.getAmount()).intValue());
+                        continue;
+                    }
+                }
+                boolean result = moduleDetailsService.updateBatchById(moduleDetails);
+                result1++;
+            }
+
+            //删除
+            remove = this.remove(designProcedureModuleQueryWrapper);
+        }
+
+        //当前工序物料变更标志design_module_change_tag module_subtotal  design_module_tag
+        DesignProcedureDetails designProcedureDetails = designProcedureDetailsMapper.selectById(parentId);
+        /*designProcedureDetails.setDesignModuleTag("1");*/
+        designProcedureDetails.setDesignModuleChangeTag("1");
+        designProcedureDetails.setModuleSubtotal(0f);
+        int result2 = designProcedureDetailsMapper.updateById(designProcedureDetails);
+
+        DesignProcedure designProcedure = designProcedureMapper.selectById(designProcedureDetails.getParentId());
+        designProcedure.setDesignModuleTag("1");
+        int i = designProcedureMapper.updateById(designProcedure);
+
+        if (result1==list.size() && result2 >0 && remove==true && i>0)
+            return true;
+        return false;
     }
 }

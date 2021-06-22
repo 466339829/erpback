@@ -1,8 +1,14 @@
 package com.guigu.erp.pojo;
 
-import java.math.BigDecimal;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
+@Data
+@TableName("m_procedure")
 public class Procedure {
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     private Integer parentId;
@@ -13,153 +19,27 @@ public class Procedure {
 
     private String procedureName;
 
-    private BigDecimal labourHourAmount;
+    private Float labourHourAmount;
 
-    private BigDecimal realLabourHourAmount;
+    private Float realLabourHourAmount;
 
-    private BigDecimal subtotal;
+    private Float subtotal;
 
-    private BigDecimal realSubtotal;
+    private Float realSubtotal;
 
-    private BigDecimal moduleSubtotal;
+    private Float moduleSubtotal;
 
-    private BigDecimal realModuleSubtotal;
+    private Float realModuleSubtotal;
 
-    private BigDecimal costPrice;
+    private Float costPrice;
 
-    private BigDecimal demandAmount;
+    private Float demandAmount;
 
-    private BigDecimal realAmount;
+    private Float realAmount;
 
     private String procedureFinishTag;
 
     private String procedureTransferTag;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    public Integer getDetailsNumber() {
-        return detailsNumber;
-    }
-
-    public void setDetailsNumber(Integer detailsNumber) {
-        this.detailsNumber = detailsNumber;
-    }
-
-    public String getProcedureId() {
-        return procedureId;
-    }
-
-    public void setProcedureId(String procedureId) {
-        this.procedureId = procedureId == null ? null : procedureId.trim();
-    }
-
-    public String getProcedureName() {
-        return procedureName;
-    }
-
-    public void setProcedureName(String procedureName) {
-        this.procedureName = procedureName == null ? null : procedureName.trim();
-    }
-
-    public BigDecimal getLabourHourAmount() {
-        return labourHourAmount;
-    }
-
-    public void setLabourHourAmount(BigDecimal labourHourAmount) {
-        this.labourHourAmount = labourHourAmount;
-    }
-
-    public BigDecimal getRealLabourHourAmount() {
-        return realLabourHourAmount;
-    }
-
-    public void setRealLabourHourAmount(BigDecimal realLabourHourAmount) {
-        this.realLabourHourAmount = realLabourHourAmount;
-    }
-
-    public BigDecimal getSubtotal() {
-        return subtotal;
-    }
-
-    public void setSubtotal(BigDecimal subtotal) {
-        this.subtotal = subtotal;
-    }
-
-    public BigDecimal getRealSubtotal() {
-        return realSubtotal;
-    }
-
-    public void setRealSubtotal(BigDecimal realSubtotal) {
-        this.realSubtotal = realSubtotal;
-    }
-
-    public BigDecimal getModuleSubtotal() {
-        return moduleSubtotal;
-    }
-
-    public void setModuleSubtotal(BigDecimal moduleSubtotal) {
-        this.moduleSubtotal = moduleSubtotal;
-    }
-
-    public BigDecimal getRealModuleSubtotal() {
-        return realModuleSubtotal;
-    }
-
-    public void setRealModuleSubtotal(BigDecimal realModuleSubtotal) {
-        this.realModuleSubtotal = realModuleSubtotal;
-    }
-
-    public BigDecimal getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(BigDecimal costPrice) {
-        this.costPrice = costPrice;
-    }
-
-    public BigDecimal getDemandAmount() {
-        return demandAmount;
-    }
-
-    public void setDemandAmount(BigDecimal demandAmount) {
-        this.demandAmount = demandAmount;
-    }
-
-    public BigDecimal getRealAmount() {
-        return realAmount;
-    }
-
-    public void setRealAmount(BigDecimal realAmount) {
-        this.realAmount = realAmount;
-    }
-
-    public String getProcedureFinishTag() {
-        return procedureFinishTag;
-    }
-
-    public void setProcedureFinishTag(String procedureFinishTag) {
-        this.procedureFinishTag = procedureFinishTag == null ? null : procedureFinishTag.trim();
-    }
-
-    public String getProcedureTransferTag() {
-        return procedureTransferTag;
-    }
-
-    public void setProcedureTransferTag(String procedureTransferTag) {
-        this.procedureTransferTag = procedureTransferTag == null ? null : procedureTransferTag.trim();
-    }
 }

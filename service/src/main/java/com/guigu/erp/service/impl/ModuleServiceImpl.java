@@ -107,7 +107,6 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
     //跟据module.id查询产品物料组成 + 产品物料组成明细
     @Override
     public ListUtil selectById(int id) {
-        Map<Module, List<ModuleDetails>> map = new HashMap<Module, List<ModuleDetails>>();
         Module module = this.getById(id);
         QueryWrapper<ModuleDetails> moduleDetailsQueryWrapper = new QueryWrapper<>();
         moduleDetailsQueryWrapper.eq("parent_id",module.getId());
@@ -255,4 +254,6 @@ public class ModuleServiceImpl extends ServiceImpl<ModuleMapper, Module> impleme
 
 
     }
+
+
 }

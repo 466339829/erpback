@@ -122,4 +122,5 @@ public class MenusController {
     public ResultUtil delete(@PathVariable int id){
         return  menusService.deleteById(id);
     }
+
 }

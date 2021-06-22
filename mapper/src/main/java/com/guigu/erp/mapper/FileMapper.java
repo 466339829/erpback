@@ -15,4 +15,9 @@ public interface FileMapper extends BaseMapper<File> {
 
     @Update("UPDATE d_file set design_procedure_tag=0 WHERE product_id=#{productId}")
     int fisupda(String productId);
+
+    @Select("select f.* from `d_file` f left join `m_design_procedure` dp \n" +
+            "on f.`product_id` = dp.`product_id`\n" +
+            "where f.`product_id` = #{productId} and dp.design_module_tag =2")
+    File selectByProductId(String productId);
 }

@@ -49,15 +49,15 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
         return this.save(file);
     }
 
-    //复核通过
+    //复核
     @Override
-    public boolean checkTag(int id,String checker) {
-        File file = this.getById(id);
-        file.setCheckTag("1");
+    public boolean checkTag(File f) {
+        File file = this.getById(f.getId());
+        file.setCheckTag(f.getCheckTag());
         //复核人
-        file.setChecker(checker);
+        file.setChecker(f.getChecker());
         //复核时间
-        file.setCheckTime(new Date());
+        file.setCheckTime(f.getCheckTime());
         return this.updateById(file);
     }
 
@@ -183,7 +183,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             //design_module_tag物料组成标志0    designModuleTag:1,
             if (file.getDesignModuleTag() != null && file.getDesignModuleTag() != "")
                 queryWrapper.eq("design_module_tag", file.getDesignModuleTag());
-            // designProcedureTag:1,
+            // designProcedureTag:1,designProcedureTag
             if (file.getDesignProcedureTag() != null && file.getDesignProcedureTag() != "")
                 queryWrapper.eq("design_procedure_tag", file.getDesignProcedureTag());
             PageHelper.startPage(pageNo, pageSize);
@@ -193,5 +193,13 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, File> implements Fi
             fileList = this.list();
         }
         return new PageInfo<File>(fileList);
+    }
+
+    @Override
+    public boolean selectByProductId(String productId) {
+        File file = fileMapper.selectByProductId(productId);
+        if (file!=null)
+            return true;
+        return false;
     }
 }

@@ -52,6 +52,12 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         if (user != null) {
             if (user.getLoginId() != null && user.getLoginId() != "")
                 queryWrapper.like("login_id", user.getLoginId());
+            // 追加条件 建档时间开始
+            if (user.getCreationDate() != null)
+                queryWrapper.ge("creationDate", user.getCreationDate());
+            // 追加条件 建档时间结束
+            if (user.getCreationDate2() != null )
+                queryWrapper.le("creationDate", user.getCreationDate2());
             PageHelper.startPage(pageNo, pageSize);
             users = this.list(queryWrapper);
         } else {
