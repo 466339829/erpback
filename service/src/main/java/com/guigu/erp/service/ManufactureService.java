@@ -9,4 +9,6 @@ public interface ManufactureService extends IService<Manufacture> {
     ResultUtil addManufacture(Manufacture manufacture);
 
     PageInfo<Manufacture> queryPage(int pageNo, int pageSize, Manufacture manufacture);
+
+    ResultUtil checkTag(Manufacture manufacture);
 }

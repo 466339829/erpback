@@ -19,4 +19,5 @@ public interface ModuleDetailsMapper extends BaseMapper<ModuleDetails> {
             "on dpd.`parent_id` = dp.`id` left join `m_design_procedure_module` dpm \n" +
             "on dpm.`parent_id` = dpd.`id` where dpm.`parent_id` = #{parentId}  and dpm.`id` = #{id}")
     List<ModuleDetails> selectByPid(@Param("parentId")int parentId ,@Param("id") int id);
+
 }

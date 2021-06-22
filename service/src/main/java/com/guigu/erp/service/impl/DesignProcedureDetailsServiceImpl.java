@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guigu.erp.mapper.DesignProcedureDetailsMapper;
 import com.guigu.erp.mapper.DesignProcedureMapper;
+import com.guigu.erp.mapper.DesignProcedureModuleMapper;
 import com.guigu.erp.mapper.FileMapper;
 import com.guigu.erp.pojo.DesignProcedure;
 import com.guigu.erp.pojo.DesignProcedureDetails;
+import com.guigu.erp.pojo.DesignProcedureModule;
 import com.guigu.erp.pojo.File;
 import com.guigu.erp.service.DesignProcedureDetailsService;
 import com.guigu.erp.service.DesignProcedureService;
@@ -25,6 +27,8 @@ public class DesignProcedureDetailsServiceImpl extends ServiceImpl<DesignProcedu
     private DesignProcedureMapper designProcedureMapper;
     @Autowired
     private FileMapper fileMapper;
+    @Autowired
+    private DesignProcedureModuleMapper designProcedureModuleMapper;
 
     @Override
     public List<DesignProcedureDetails> selectByPid(String productId) {
@@ -100,11 +104,19 @@ public class DesignProcedureDetailsServiceImpl extends ServiceImpl<DesignProcedu
 
     @Override
     public ResultUtil delete(int id, int parentId) {
+        ResultUtil<Object> resultUtil = new ResultUtil<>();
+        QueryWrapper<DesignProcedureModule> designProcedureModuleQueryWrapper = new QueryWrapper<>();
+        designProcedureModuleQueryWrapper.eq("parent_id",id);
+        List<DesignProcedureModule> list = designProcedureModuleMapper.selectList(designProcedureModuleQueryWrapper);
+        if (list.size()>0){
+            resultUtil.setResult(false);
+            resultUtil.setMessage("操作失败");
+            return resultUtil;
+        }
         DesignProcedure designProcedure = designProcedureMapper.selectById(parentId);
         designProcedure.setCheckTag("0");
         int result1 = designProcedureMapper.updateById(designProcedure);
         boolean result2 = this.removeById(id);
-        ResultUtil<Object> resultUtil = new ResultUtil<>();
         if (result1 > 0 && result2 == true) {
             resultUtil.setResult(true);
             resultUtil.setMessage("操作成功");

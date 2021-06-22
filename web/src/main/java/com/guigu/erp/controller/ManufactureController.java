@@ -32,4 +32,9 @@ public class ManufactureController {
 
         return  manufactureService.queryPage(pageNo,pageSize,manufacture);
     }
+
+    @RequestMapping("/checkTag")
+    public ResultUtil checkTag(Manufacture manufacture){
+        return manufactureService.checkTag(manufacture);
+    }
 }

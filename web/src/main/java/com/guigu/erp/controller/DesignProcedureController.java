@@ -44,9 +44,9 @@ public class DesignProcedureController {
     }
 
     //审核不通过
-    @RequestMapping("/delete")
-    public boolean delete(DesignProcedure designProcedure) {
-        return designProcedureService.delete(designProcedure);
+    @RequestMapping("/delete/{id}")
+    public boolean delete(@PathVariable int id) {
+        return designProcedureService.delete(id);
     }
 
     @RequestMapping("/checkDesignModuleTag/{id}")

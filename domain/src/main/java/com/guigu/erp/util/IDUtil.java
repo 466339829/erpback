@@ -89,5 +89,18 @@ public class IDUtil {
             return "201" + dateStr +  "0001";
         }
     }
-
+    //出库单编号	402+当前日期+4位流水号
+    public static String getPayId(String longId){
+        String substring ="";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        String dateStr = sdf.format(new Date());
+        if (longId != null) {
+            substring = longId.substring(longId.length()-4);
+            AtomicLong at = new AtomicLong(Long.parseLong(substring));
+            Long atLong = at.incrementAndGet();
+            return "402" +dateStr + String.format("%04d", atLong);
+        } else {
+            return "402" + dateStr +  "0001";
+        }
+    }
 }
