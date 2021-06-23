@@ -7,6 +7,9 @@ import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -20,8 +23,14 @@ public class UsersController {
      * @return
      */
     @RequestMapping("/login")
-    public ResultUtil login(String loginId, String password) {
-        return usersService.login(loginId, password);
+    public ResultUtil login(String loginId, String password, HttpServletRequest request) {
+        return usersService.login(loginId, password,request);
+    }
+
+    //退出
+    @RequestMapping("/logout")
+    public void logout( HttpSession session) {
+        session.invalidate();
     }
 
     /**
