@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
+import com.guigu.erp.mapper.RolesMapper;
 import com.guigu.erp.mapper.UserRoleMapper;
 import com.guigu.erp.mapper.UsersMapper;
+import com.guigu.erp.pojo.Roles;
 import com.guigu.erp.pojo.UserRole;
 import com.guigu.erp.pojo.Users;
 import com.guigu.erp.service.UsersService;
@@ -14,6 +16,8 @@ import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
@@ -21,10 +25,12 @@ import java.util.List;
 public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements UsersService {
     @Autowired
     private UserRoleMapper userRoleMapper;
+    @Autowired
+    private RolesMapper rolesMapper;
 
     //登录
     @Override
-    public ResultUtil login(String loginId, String password) {
+    public ResultUtil login(String loginId, String password, HttpServletRequest request) {
         ResultUtil<Users> resultUtil = new ResultUtil<>();
         QueryWrapper<Users> userInfoQueryWrapper = new QueryWrapper<>();
         userInfoQueryWrapper.eq("login_id", loginId);
@@ -32,6 +38,9 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         userInfoQueryWrapper.eq("status", 0);
         Users users = this.getOne(userInfoQueryWrapper);
         if (users != null) {
+            List<Roles> roles = rolesMapper.selectRoleByUid(users.getId());
+            users.setRoleName(roles.get(0).getName());
+            request.getSession().setAttribute("user",users.getId());
             resultUtil.setData(users);
             resultUtil.setMessage("登录成功");
             resultUtil.setResult(true);

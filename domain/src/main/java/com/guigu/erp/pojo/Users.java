@@ -31,4 +31,6 @@ public class Users {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     @TableField(exist = false)
     private Date creationDate2;
+    @TableField(exist = false)
+    private String roleName;
 }
