@@ -30,4 +30,10 @@ public class GathController {
 
         return  gathService.updates(gather);
     }
+    @RequestMapping("/pages2")
+    public IPage<Gather> pages2(@RequestParam(defaultValue = "1") int pageNo,
+                               @RequestParam(defaultValue = "5") int pageSize){
+
+        return gathService.page(new Page<Gather>(pageNo,pageSize));
+    }
 }

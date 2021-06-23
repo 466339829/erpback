@@ -24,3 +24,4 @@ public class GathServiceImpl extends ServiceImpl<GatherMapper, Gather> implement
         return 0;
     }
 }
+    
