@@ -43,6 +43,7 @@ public class GathController {
                                 @RequestParam(defaultValue = "5") int pageSize){
         QueryWrapper<Gather> queryWrapper=new QueryWrapper<Gather>();
         queryWrapper.eq("check_tag",0);
+        queryWrapper.eq("gather_tag",1);
         return gathService.page(new Page<Gather>(pageNo,pageSize),queryWrapper);
     }
     //入库审核不通过
@@ -56,6 +57,7 @@ public class GathController {
     //通过
     @RequestMapping("/update")
     public boolean update(Gather gather){
+        gather.setCheckTag("1");
         gather.setGatherTag("2");
         UpdateWrapper<Gather> updateWrapper=new UpdateWrapper<Gather>();
         updateWrapper.eq("id",gather.getId());
