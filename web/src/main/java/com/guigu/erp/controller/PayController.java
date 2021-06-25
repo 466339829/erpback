@@ -45,11 +45,20 @@ public class PayController {
         updateWrapper.eq("id",payDetails.getId());
         return payDetailsService.update(payDetails,updateWrapper);
     }
+    //通过提交
     @RequestMapping("/payupdate")
     public boolean payupdate(Pay pay){
         UpdateWrapper<Pay> updateWrapper=new UpdateWrapper<Pay>();
         updateWrapper.eq("id",pay.getId());
         pay.setCheckTag(pay.getCheckTag());
+        return payService.update(pay,updateWrapper);
+    }
+    //不通过提交
+    @RequestMapping("/payupdate2")
+    public boolean payupdate2(Pay pay){
+        UpdateWrapper<Pay> updateWrapper=new UpdateWrapper<Pay>();
+        updateWrapper.eq("id",pay.getId());
+        pay.setCheckTag("2");
         return payService.update(pay,updateWrapper);
     }
 }

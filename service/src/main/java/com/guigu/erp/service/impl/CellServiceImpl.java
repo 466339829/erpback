@@ -62,4 +62,9 @@ public class CellServiceImpl extends ServiceImpl<CellMapper, Cell> implements Ce
         PageInfo<Cell> info = new PageInfo<Cell>(list);
         return info;
     }
+
+    @Override
+    public int selectByBeforeId(String befroeId) {
+        return cellMapper.selectByBeforeId(befroeId);
+    }
 }

@@ -10,4 +10,7 @@ public interface CellService extends IService<Cell> {
 
     public int deleteas(int id,String productId);
     PageInfo<Cell> seles(int pageNo,int pageSize,Cell cell);
+
+    int selectByBeforeId(String befroeId);
+
 }

@@ -12,10 +12,7 @@ import com.guigu.erp.service.CellService;
 import com.guigu.erp.service.FileService;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -89,6 +86,29 @@ public class CellController {
         }
 
         return cellService.page(new Page<Cell>(pageNo, pageSize), wrapper);
+    }
+    //动态库存查询
+    @RequestMapping("/selectAll")
+    public IPage<Cell> selectAll(@RequestParam(defaultValue = "1") int pageNo,
+                                    @RequestParam(defaultValue = "5") int pageSize,
+                                    Cell cell) {
+        QueryWrapper<Cell> wrapper = new QueryWrapper<Cell>();
+        if (!StringUtil.isEmpty(cell.getProductName())) {
+
+            wrapper.like("product_name", cell.getProductName());
+        } else if (!StringUtil.isEmpty(cell.getFirstKindName())) {
+            wrapper.like("first_kind_name", cell.getFirstKindName());
+        } else if (!StringUtil.isEmpty(cell.getSecondKindName())) {
+            wrapper.like("second_kind_name", cell.getSecondKindName());
+        } else if (!StringUtil.isEmpty(cell.getThirdKindName())) {
+            wrapper.like("third_kind_name", cell.getThirdKindName());
+        }
+        return cellService.page(new Page<Cell>(pageNo, pageSize), wrapper);
+    }
+    //查询产品是否配置安全库存
+    @RequestMapping("/selectByBeforeId/{befroeId}")
+    public int selectByBeforeId(@PathVariable String befroeId){
+        return cellService.selectByBeforeId(befroeId);
     }
     @RequestMapping("/StaByid")
     public Cell StaByid(int id){

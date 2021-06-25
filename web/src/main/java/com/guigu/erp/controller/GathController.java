@@ -1,6 +1,7 @@
 package com.guigu.erp.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guigu.erp.pojo.Gather;
@@ -35,5 +36,29 @@ public class GathController {
                                @RequestParam(defaultValue = "5") int pageSize){
 
         return gathService.page(new Page<Gather>(pageNo,pageSize));
+    }
+    //入库调度显示等待审核
+    @RequestMapping("/pages3")
+    public IPage<Gather> pages3(@RequestParam(defaultValue = "1") int pageNo,
+                                @RequestParam(defaultValue = "5") int pageSize){
+        QueryWrapper<Gather> queryWrapper=new QueryWrapper<Gather>();
+        queryWrapper.eq("check_tag",0);
+        return gathService.page(new Page<Gather>(pageNo,pageSize),queryWrapper);
+    }
+    //入库审核不通过
+    @RequestMapping("/update2")
+    public boolean update2(Gather gather){
+        gather.setCheckTag("2");
+        UpdateWrapper<Gather> updateWrapper=new UpdateWrapper<Gather>();
+        updateWrapper.eq("id",gather.getId());
+        return gathService.update(gather,updateWrapper);
+    }
+    //通过
+    @RequestMapping("/update")
+    public boolean update(Gather gather){
+        gather.setGatherTag("2");
+        UpdateWrapper<Gather> updateWrapper=new UpdateWrapper<Gather>();
+        updateWrapper.eq("id",gather.getId());
+        return gathService.update(gather,updateWrapper);
     }
 }

@@ -1,5 +1,6 @@
 package com.guigu.erp.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guigu.erp.mapper.GatherDetailsMapper;
 import com.guigu.erp.mapper.GatherMapper;
@@ -18,6 +19,8 @@ import java.util.List;
 public class GatherDetailsServiceImpl extends ServiceImpl<GatherDetailsMapper, GatherDetails> implements GatherDetailsService {
     @Autowired
     private GatherMapper gatherMapper;
+    @Autowired
+    private GatherDetailsMapper gatherDetailsMapper;
 
     @Transactional
     @Override
@@ -54,5 +57,11 @@ public class GatherDetailsServiceImpl extends ServiceImpl<GatherDetailsMapper, G
         if (insert > 0 && result == true)
             return true;
         return false;
+    }
+
+    //根据父id查询，拿到产品编号，继续查询产品
+    @Override
+    public List<GatherDetails> selectByPId(Integer gid) {
+        return gatherDetailsMapper.selectByPId(gid);
     }
 }
