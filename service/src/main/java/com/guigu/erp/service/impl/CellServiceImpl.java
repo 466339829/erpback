@@ -11,6 +11,7 @@ import com.guigu.erp.mapper.FileMapper;
 import com.guigu.erp.pojo.Cell;
 import com.guigu.erp.pojo.File;
 import com.guigu.erp.service.CellService;
+import com.guigu.erp.util.IDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,11 @@ public class CellServiceImpl extends ServiceImpl<CellMapper, Cell> implements Ce
 
     @Override
     public boolean inserts(Cell cell, int id) {
+
+        String longId = cellMapper.LongId();
+        String gatherId = IDUtil.getCellstoreId(longId);
         cell.setCheckTag("1");
+        cell.setStoreId(gatherId);
         int insert = cellMapper.insert(cell);
         if (insert > 0) {
             fileMapper.filsupdate(id);
