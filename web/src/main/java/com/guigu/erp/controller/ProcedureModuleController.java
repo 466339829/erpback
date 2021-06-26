@@ -2,6 +2,7 @@ package com.guigu.erp.controller;
 
 import com.guigu.erp.pojo.ProcedureModule;
 import com.guigu.erp.service.ProcedureModuleService;
+import com.guigu.erp.util.ProcedureModuleUtil;
 import com.guigu.erp.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,16 @@ public class ProcedureModuleController {
     }
 
     @RequestMapping(value = "/procedureFinish",produces = "application/json;charset=utf-8")
-    public ResultUtil setRoleMenu(@RequestBody List<ProcedureModule> procedureModuleList){
+    public ResultUtil procedureFinish(@RequestBody List<ProcedureModule> procedureModuleList){
         return procedureModuleService.saveOrUpdateBatchExtend(procedureModuleList);
+    }
+    @RequestMapping("/selectShuLiang/{parentId}")
+    public ProcedureModuleUtil selectShuLiang(@PathVariable int parentId){
+        return procedureModuleService.selectShuLiang(parentId);
+    }
+
+    @RequestMapping(value = "/checkProcedureFinish",produces = "application/json;charset=utf-8")
+    public ResultUtil checkProcedureFinish(@RequestBody List<ProcedureModule> procedureModuleList){
+        return procedureModuleService.checkProcedureFinish(procedureModuleList);
     }
 }

@@ -54,4 +54,17 @@ public class ProcedureModule {
     @TableField(value = "labourHourAmount" ,exist = false)
     private Integer labourHourAmount;
 
+    @TableField(value = "proceduringId" ,exist = false)
+    private Integer proceduringId;
+
+    @TableField(value = "register" ,exist = false)
+    private  String checker;
+
+    @DateTimeFormat(pattern ="yyyy-MM-dd HH:mm:ss" )
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @TableField(exist = false)
+    private Date checkTime;
+
+    @TableField(value = "amountUnit" ,exist = false)
+    private  String amountUnit;
 }

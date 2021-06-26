@@ -76,5 +76,13 @@ public class UsersController {
         return  usersService.deleteById(id);
     }
 
+    @RequestMapping("/updatePwd")
+    public boolean updatePwd(Users users){
+        return  usersService.updatePwd(users);
+    }
 
+    @RequestMapping("/updatePhoto")
+    public boolean updatePhoto(Users users){
+        return  usersService.updatePhoto(users);
+    }
 }

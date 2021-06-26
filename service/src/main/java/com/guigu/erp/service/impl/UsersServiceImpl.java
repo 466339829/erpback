@@ -40,7 +40,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         if (users != null) {
             List<Roles> roles = rolesMapper.selectRoleByUid(users.getId());
             users.setRoleName(roles.get(0).getName());
-            request.getSession().setAttribute("user",users.getId());
+         /*   request.getSession().setAttribute("user",users.getId());*/
             resultUtil.setData(users);
             resultUtil.setMessage("登录成功");
             resultUtil.setResult(true);
@@ -152,5 +152,19 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
             resultUtil.setMessage("删除失败");
             return resultUtil;
         }
+    }
+
+    @Override
+    public boolean updatePwd(Users users) {
+        Users param = this.getById(users.getId());
+        param.setPassword(users.getPassword());
+        return this.updateById(param);
+    }
+
+    @Override
+    public boolean updatePhoto(Users users) {
+        Users param = this.getById(users.getId());
+        param.setPhoto(users.getPhoto());
+        return this.updateById(param);
     }
 }

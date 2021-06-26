@@ -57,6 +57,9 @@ public class ManufactureServiceImpl extends ServiceImpl<ManufactureMapper, Manuf
         String longId = manufactureMapper.getLongId();
         String manufactureId = IDUtil.getManufactureId(longId);
         manufacture.setManufactureId(manufactureId);
+        manufacture.setRealLabourCostPriceSum(0f);
+        manufacture.setRealModuleCostPriceSum(0f);
+        manufacture.setTestedAmount(0f);
         boolean result1 = this.save(manufacture);
 
         List<DesignProcedureDetails> designProcedureDetails = designProcedureDetailsService.selectByPid(manufacture.getProductId());
@@ -94,9 +97,9 @@ public class ManufactureServiceImpl extends ServiceImpl<ManufactureMapper, Manuf
                 procedureModule.setProductId(dpm.getProductId());
                 procedureModule.setProductName(dpm.getProductName());
                 procedureModule.setCostPrice(dpm.getCostPrice().floatValue());
-                procedureModule.setAmount(manufacture.getAmount());
+                procedureModule.setAmount(manufacture.getAmount()*dpm.getAmount().intValue());
                 procedureModule.setRealAmount(0f);
-                procedureModule.setRenewAmount(0f);
+                procedureModule.setRenewAmount(manufacture.getAmount()*dpm.getAmount().intValue());
                 procedureModule.setSubtotal(dpm.getSubtotal().floatValue());
                 procedureModule.setRealSubtotal(0f);
 
@@ -127,8 +130,8 @@ public class ManufactureServiceImpl extends ServiceImpl<ManufactureMapper, Manuf
                 queryWrapper.eq("manufacture_id", manufacture.getManufactureId());
             if (manufacture.getProductName() != null && manufacture.getProductName() != "")
                 queryWrapper.like("product_name", manufacture.getProductName());
-            if (manufacture.getProductName() != null && manufacture.getProductName() != "")
-                queryWrapper.like("product_name", manufacture.getProductName());
+            /*if (manufacture.getProductName() != null && manufacture.getProductName() != "")
+                queryWrapper.like("product_name", manufacture.getProductName());*/
 
             // 追加条件 建档时间开始
             if (manufacture.getRegisterTime() != null)
@@ -137,8 +140,10 @@ public class ManufactureServiceImpl extends ServiceImpl<ManufactureMapper, Manuf
             if (manufacture.getRegisterTime2() != null)
                 queryWrapper.le("register_time", manufacture.getRegisterTime2());
             if (manufacture.getCheckTag() != null && manufacture.getCheckTag() != "")
-                queryWrapper.le("check_tag", manufacture.getCheckTag());
+                queryWrapper.eq("check_tag", manufacture.getCheckTag());
 
+            if (manufacture.getManufactureProcedureTag() != null && manufacture.getManufactureProcedureTag() != "")
+                queryWrapper.eq("manufacture_procedure_tag", manufacture.getManufactureProcedureTag());
             PageHelper.startPage(pageNo, pageSize);
             manufactureList = this.list(queryWrapper);
         } else {
@@ -212,7 +217,7 @@ public class ManufactureServiceImpl extends ServiceImpl<ManufactureMapper, Manuf
                     payDetails.setParentId(pay.getId());
                     payDetails.setProductId(procedureModule.getProductId());
                     payDetails.setProductName(procedureModule.getProductName());
-                    payDetails.setAmount(manufacture.getAmount());
+                    payDetails.setAmount(procedureModule.getAmount());
                     payDetails.setCostPrice(procedureModule.getCostPrice());
                     payDetails.setSubtotal(manufacture.getAmount()*procedureModule.getCostPrice());
                     payDetails.setPaidAmount(0f);
