@@ -18,4 +18,8 @@ public interface UsersService extends IService<Users> {
     ResultUtil insert(Users userInfo);
 
     ResultUtil deleteById(int id);
+
+    boolean updatePwd(Users users);
+
+    boolean updatePhoto(Users users);
 }
