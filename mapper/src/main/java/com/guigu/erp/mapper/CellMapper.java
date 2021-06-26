@@ -5,6 +5,9 @@ import com.guigu.erp.pojo.Cell;
 import org.apache.ibatis.annotations.Select;
 
 public interface CellMapper extends BaseMapper<Cell> {
+
+    @Select("select m.`store_id` from `s_cell` m order by m.`id` desc limit 0,1")
+    String LongId();
     @Select("SELECT COUNT(*) FROM s_cell WHERE product_id=#{befroeId}")
     Integer selectByBeforeId(String  befroeId);
 }
